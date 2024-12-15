@@ -1,10 +1,4 @@
-![Cover Photo](./images_(1)-U7vvrS2y_-transformed.jpeg)
-<pre></pre>
-<h1 style="color: green" align="center">Hello World!</h1>
-<pre></pre>
-
-
-
+<img src="./images_(1)-U7vvrS2y_-transformed.jpeg" height="200" width="100%" alt="Cover Photo"/>
 
 <h2> Hi, I'm Rifat. <img src="https://media.giphy.com/media/mGcNjsfWAjY5AEZNw6/giphy.gif" width="50"></h2>
 <img align='right' src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjgzdGY2ajE2eXFnY3hzOHZ3ZHJrc2hmZm8wdDI1YWhrY3U4MW04MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oKIPnAiaMCws8nOsE/giphy.gif" width="230">
