@@ -23,8 +23,7 @@ const RifatParadoxical = {
                         haveAchivements: true ,
                         skills: true,
                         git&Github: true;
-                      },
- challenge: "I am doing the #100DaysOfCode challenge focused on react and Backend development."
+                      }
 }
 ```
 
