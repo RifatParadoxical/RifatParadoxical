@@ -1,7 +1,6 @@
 <img src="./images_(1)-U7vvrS2y_-transformed.jpeg" height="200" width="100%" alt="Cover Photo"/>
 
 <h2> Hi, I'm Rifat. <img src="https://media.giphy.com/media/mGcNjsfWAjY5AEZNw6/giphy.gif" width="50"></h2>
-<img align='right' src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExZjgzdGY2ajE2eXFnY3hzOHZ3ZHJrc2hmZm8wdDI1YWhrY3U4MW04MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oKIPnAiaMCws8nOsE/giphy.gif" width="230">
 <p><em> An ardent frontend developer hailing from Bangladesh <a href="https://dmrc.edu.bd/">studing in Dr Mahabubur Rahman Mollah College.</a></br> Larning React and Backend Development <img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30"> 
 </em></p>
 
