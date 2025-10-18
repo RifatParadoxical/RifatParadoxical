@@ -23,7 +23,7 @@ const RifatParadoxical = {
 ```
 ### 🚀 My Skills  
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=js,css,firebase,tailwind,vscode,github,react" alt="Skill Icons">
+  <img src="https://skillicons.dev/icons?i=js,css,firebase,tailwind,vscode,vscodium,github,git,react,python,selenium,postman" alt="Skill Icons">
 </p>
 
  <em><b>I love connecting with different people</b> so if you want to say <b>hi, I'll be happy to meet you more!</b> :)</em>
