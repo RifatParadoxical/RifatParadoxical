@@ -108,9 +108,20 @@ int main() {
 
 *I'm always happy to meet new people — say Hi anytime! 😊*
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/your-linkedin)
-[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/your-twitter)
-[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:your-email@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/md-rifat-dev/)
+[![Facebook](https://img.shields.io/badge/Facebook-1DA1F2?style=for-the-badge&logo=facebook&logoColor=white)](https://www.facebook.com/profile.php?id=61584353895984)
+[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:muhammudrifat67@gmail.com)
+
+</div>
+
+---
+
+## ☕ Support My Work
+<div align="center">
+
+*If you like what I build, a cup of cha would mean a lot! 🍵*
+
+[![Buy Me a Cha](https://img.shields.io/badge/Buy%20Me%20a%20Cha-ff6b35?style=for-the-badge&logo=buymeacoffee&logoColor=white)](https://www.buymeacha.com/rifatparadoxical)
 
 </div>
 
@@ -121,7 +132,5 @@ int main() {
 <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=2,3,30&height=120&section=footer"/>
 
 **"The journey of a thousand miles begins with a single line of code."** 🛣️
-
-*Still learning. Still building. Every day a little better.* 💪
 
 </div>
