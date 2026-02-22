@@ -1,31 +1,127 @@
-<img src="./images_(1)-U7vvrS2y_-transformed.jpeg" height="200" width="100%" alt="Cover Photo"/>
+<div align="center">
 
-<h2> Hi, I'm Rifat. <img src="https://media.giphy.com/media/mGcNjsfWAjY5AEZNw6/giphy.gif" width="50"></h2>
-<p><em> An ardent frontend developer hailing from Bangladesh. Studing in <a href="https://dmrc.edu.bd/"> Dr Mahabubur Rahman Mollah College.</a></br> Learning React and Firebase <img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30"> 
-</em></p>
+<img width="100%" src="https://capsule-render.vercel.app/api?type=speech&color=gradient&customColorList=6,11,20&height=200&section=header&text=Hey,%20I'm%20Rifat!&fontSize=70&fontColor=fff&animation=twinkling&fontAlignY=38&reversal=true"/>
 
+<a href="https://git.io/typing-svg">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&pause=1000&color=00FFB3&center=true&vCenter=true&width=650&lines=Learning+C+Programming+%F0%9F%96%A5%EF%B8%8F;Interested+At+Embedded+Systems+%26+IoT+%F0%9F%94%8C;Web+Dev+(still+learning!)+%F0%9F%8C%B1;From+Bangladesh+%F0%9F%87%A7%F0%9F%87%A9+%7C+Curious+by+Nature+%F0%9F%94%8D" alt="Typing SVG" />
+</a>
 
+<br/><br/>
 
-### <img src="https://media.giphy.com/media/VgCDAzcKvsR6OM0uWg/giphy.gif" width="50"> A little more about me...  
+![Profile Views](https://komarev.com/ghpvc/?username=RifatParadoxical&color=00ffb3&style=for-the-badge&label=PROFILE+VIEWS)
 
-```javascript
-const RifatParadoxical = {
-  pronouns: "He" | "His",
-  code: ["JavaScript", "HTML", "CSS", "Tailwind", "GSAP"],
-  tools: ["React", "Firebase", "Git", "GitHub"],
-  application: ["VSCode"],
-  moreAbout: {
-    coCurriculum: ["Debating", "Volunteerism", "Coding", "Campus Ambassador"],
-    currentlyLearning: ["Firebase", "Advanced React", "GSAP with React"],
-    futureGoals: ["Freelancing on Upwork", "Become a full-stack developer", "Study Computer Science"]
-  }
-}
-```
-### 🚀 My Skills  
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=js,css,firebase,tailwind,vscode,vscodium,github,git,react,python,selenium,postman" alt="Skill Icons">
-</p>
-
- <em><b>I love connecting with different people</b> so if you want to say <b>hi, I'll be happy to meet you more!</b> :)</em>
+</div>
 
 ---
+
+## 🙋 Who Am I?
+
+```c
+#include <stdio.h>
+
+int main() {
+    char* name        = "Rifat";
+    char* location    = "Bangladesh";
+    char* status      = "Passionate ofc!";
+
+    char* currentFocus[]  = {
+        "C Programming",
+        "Embedded Systems",
+        "IoT (Internet of Things)",
+        NULL
+    };
+
+    char* alsoKnows[]  = {
+        "HTML", "CSS", "JavaScript", "React",
+        "Python", "Selenium", "Scrapy", "Playwright"
+        NULL
+    };
+
+    char* interests[] = {
+        "🔌 Microcontrollers & circuits",
+        "🌐 Connected smart devices",
+        "💡 Building things that exist in the real world",
+        NULL
+    };
+
+    char* beyondCode[] = {
+        "🗣️ Debating",
+        "🤝 Volunteerism",
+        "🎓 Campus Ambassador",
+        NULL
+    };
+
+    printf("Hi! I'm %s from %s.\n", name, location);
+    printf("I'm a %s who loves learning.\n", status);
+    printf("Right now I'm all about low-level programming & embedded systems!\n");
+
+    return 0;
+}
+```
+
+---
+
+## 🔭 My Current Focus
+
+<div align="center">
+
+| 💻 Main Focus | 🎯 Future Goals |
+|:---:|:---:|
+| C Programming | Embedded Systems Engineer |
+| Embedded Systems | Build IoT Projects |
+| IoT Fundamentals | Study Computer Science |
+
+</div>
+
+---
+
+## 🛠️ Skills & Tools
+
+<div align="center">
+
+**Currently Focused On**
+
+![C](https://img.shields.io/badge/C-A8B9CC?style=for-the-badge&logo=c&logoColor=black)
+![Embedded Systems](https://img.shields.io/badge/Embedded_Systems-FF6B35?style=for-the-badge&logo=arduino&logoColor=white)
+![IoT](https://img.shields.io/badge/IoT-0082FC?style=for-the-badge&logo=raspberrypi&logoColor=white)
+![Arduino](https://img.shields.io/badge/Arduino-00979D?style=for-the-badge&logo=arduino&logoColor=white)
+
+**Also Know a Bit Of**
+
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+
+**Tools I Use**
+
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
+![VSCode](https://img.shields.io/badge/VS_Code-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white)
+
+</div>
+
+---
+
+## 🤝 Let's Connect!
+
+<div align="center">
+
+*I'm always happy to meet new people — say Hi anytime! 😊*
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/your-linkedin)
+[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/your-twitter)
+[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:your-email@gmail.com)
+
+</div>
+
+---
+
+<div align="center">
+
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=2,3,30&height=120&section=footer"/>
+
+**"The journey of a thousand miles begins with a single line of code."** 🛣️
+
+*Still learning. Still building. Every day a little better.* 💪
+
+</div>
