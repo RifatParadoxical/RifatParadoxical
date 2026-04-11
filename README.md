@@ -117,12 +117,10 @@ int main() {
 ---
 
 ## ☕ Support My Work
-<div align="center">
-
-*If you like what I build, a cup of cha would mean a lot! 🍵*
-
-[![Buy Me a Cha](https://img.shields.io/badge/Buy%20Me%20a%20Cha-ff6b35?style=for-the-badge&logo=buymeacoffee&logoColor=white)](https://www.buymeacha.com/rifatparadoxical)
-
+<div align="center"">
+  <a href="https://buymeacha.com/rifatparadoxical" target="_blank">
+    <img src="https://i.ibb.co.com/KzQhvx2n/Buy-Me-A-Cha-modified.png" width="150">
+  </a>
 </div>
 
 ---
