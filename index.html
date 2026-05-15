@@ -27,25 +27,23 @@
 
     /* ─── TOKENS ─── */
     :root {
-      --bg: #0c0c0c;
-      --surface: #353535;
-      --border: #575756;
-      --border2: #858585;
-      --text: #b8b8b8;
-      --muted: #bdbdbd;
-      --faint: #c7c7c7;
-      --accent: #2563eb;
-      --accent-bg: #242629;
-      --accent-bd: #535353;
+      --bg: #090909;
+      --surface: #141414;
+      --border: #1e1e1e;
+      --border2: #333;
+      --text: #e5e5e5;
+      --muted: #a3a3a3;
+      --faint: #666;
+      --accent: #10b981;
+      --accent-bg: #0d1a14;
+      --accent-bd: #166534;
       --radius: 8px;
       --radius-lg: 10px;
       --mono: 'Geist Mono', monospace;
       --serif: 'Instrument Serif', serif;
       --sans: 'Geist', system-ui, sans-serif;
       --nav-w: 64px;
-      /* desktop side nav width */
       --nav-h: 60px;
-      /* mobile bottom nav height */
       --page-p: 32px;
     }
 
@@ -407,31 +405,252 @@
       padding: 36px;
     }
 
-    /* ─── SKILLS SECTION ─── */
+    /* ─── SKILLS SECTION (MCU / Circuit Board Design) ─── */
     .skills-inner {
       padding: 36px;
+      position: relative;
+      overflow: hidden;
     }
 
+    /* Subtle PCB grid background */
+    .skills-inner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(87, 87, 86, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(87, 87, 86, 0.08) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    /* ── MCU CHIP HEADER ── */
+    .mcu-chip-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      margin-bottom: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .mcu-chip {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .mcu-chip-body {
+      background: var(--surface);
+      border: 1.5px solid var(--border2);
+      border-radius: 6px;
+      padding: 12px 32px;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      position: relative;
+      z-index: 2;
+      white-space: nowrap;
+      text-transform: none;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.03),
+        0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Chip notch */
+    .mcu-chip-body::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -1.5px;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 14px;
+      background: var(--bg);
+      border: 1.5px solid var(--border2);
+      border-left: none;
+      border-radius: 0 4px 4px 0;
+    }
+
+    /* Pin rows on left and right */
+    .mcu-pins {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .mcu-pins.left {
+      padding-right: 0;
+    }
+
+    .mcu-pins.right {
+      padding-left: 0;
+    }
+
+    .mcu-pin {
+      width: 18px;
+      height: 3px;
+      background: var(--border2);
+      border-radius: 1px;
+      position: relative;
+    }
+
+    .mcu-pin::after {
+      content: '';
+      position: absolute;
+      top: -1px;
+      width: 4px;
+      height: 5px;
+      background: var(--border2);
+      border-radius: 1px;
+    }
+
+    .mcu-pins.left .mcu-pin::after {
+      left: 0;
+    }
+
+    .mcu-pins.right .mcu-pin::after {
+      right: 0;
+    }
+
+    /* ── CIRCUIT TRACES ── */
+    .circuit-traces {
+      position: relative;
+      height: 70px;
+      margin-bottom: 0;
+      z-index: 1;
+    }
+
+    .circuit-traces svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .trace-line {
+      stroke: var(--border2);
+      stroke-width: 1.5;
+      fill: none;
+      opacity: 0.5;
+    }
+
+    .trace-dot {
+      fill: var(--accent);
+      opacity: 0.7;
+    }
+
+    /* Animated glow on traces */
+    .trace-glow {
+      stroke: var(--accent);
+      stroke-width: 1.5;
+      fill: none;
+      opacity: 0;
+      animation: traceGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes traceGlow {
+
+      0%,
+      100% {
+        opacity: 0;
+        stroke-dashoffset: 200;
+      }
+
+      50% {
+        opacity: 0.6;
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .trace-glow:nth-child(2) {
+      animation-delay: 0.5s;
+    }
+
+    .trace-glow:nth-child(4) {
+      animation-delay: 1s;
+    }
+
+    .trace-glow:nth-child(6) {
+      animation-delay: 1.5s;
+    }
+
+    /* ── SKILLS GRID ── */
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 10px;
-      margin-top: 24px;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+      position: relative;
+      z-index: 2;
     }
 
     .skill-item {
-      background: var(--bg);
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px 20px;
-      transition: border-color 0.18s, background 0.18s;
+      border-radius: var(--radius-lg);
+      padding: 24px 22px;
+      transition: border-color 0.25s, background 0.25s, transform 0.25s, box-shadow 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle corner accent */
+    .skill-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 40px;
+      height: 40px;
+      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 70%);
+      pointer-events: none;
     }
 
     .skill-item:hover {
-      border-color: var(--border2);
-      background: var(--surface);
+      border-color: var(--accent-bd);
+      background: var(--accent-bg);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
     }
 
+    .skill-icon-wrap {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+    }
+
+    .skill-icon-wrap svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .skill-name-text {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .skill-desc {
+      font-size: 12px;
+      color: var(--faint);
+      line-height: 1.6;
+      font-family: var(--sans);
+    }
+
+    .skill-sub {
+      font-size: 11px;
+      color: var(--faint);
+      font-family: var(--mono);
+    }
+
+    /* ── Old skill-emoji for backward compat (about section) ── */
     .skill-emoji {
       width: 28px;
       height: 28px;
@@ -443,18 +662,6 @@
     .skill-emoji svg {
       width: 100%;
       height: 100%;
-    }
-
-    .skill-name-text {
-      font-size: 13px;
-      font-weight: 500;
-      margin-bottom: 3px;
-    }
-
-    .skill-sub {
-      font-size: 11px;
-      color: var(--faint);
-      font-family: var(--mono);
     }
 
     /* ─── CODEFORCES SECTION ─── */
@@ -1175,6 +1382,13 @@
           d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3M3.75 21h16.5a1.5 1.5 0 001.5-1.5V5.25a1.5 1.5 0 00-1.5-1.5H3.75a1.5 1.5 0 00-1.5 1.5v14.25A1.5 1.5 0 003.75 21z" />
       </svg>
     </a>
+    <a href="#" class="nav-btn" data-tab="projects" data-tip="projects"
+      onclick="switchTab('projects',this);return false;">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+      </svg>
+    </a>
     <a href="#" class="nav-btn" data-tab="codeforces" data-tip="codeforces"
       onclick="switchTab('codeforces',this);return false;">
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1220,6 +1434,13 @@
       </svg>
       skills
     </a>
+    <a class="nav-btn" data-tab="projects" onclick="switchTab('projects',this);return false;" href="#">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+      </svg>
+      proj
+    </a>
     <a class="nav-btn" data-tab="codeforces" onclick="switchTab('codeforces',this);return false;" href="#">
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round"
@@ -1258,21 +1479,22 @@
               <div>
                 <div class="home-meta">
                   <span class="dot-live"></span>
-                  BSc CSE Student · Problem Solver
+                  BSc CSE Student · Embedded Systems Enthusiast
                 </div>
                 <h1>Muhammad<br /><em>Rifat</em></h1>
                 <p class="home-desc">
-                  I solve problems on <strong>Codeforces</strong> using C.<br />
-                  Interested in <strong>IoT</strong> and <strong>Embedded Systems</strong>.<br />
-                  I've learned C, Python, JS and TypeScript.
+                  Passionate about <strong>IoT</strong> &amp; <strong>Embedded Systems</strong> — building things that
+                  interact with the physical world.<br />
+                  I solve algorithmic problems on <strong>Codeforces</strong> using C.<br />
+                  Skilled in C, Python, JavaScript and TypeScript.
                 </p>
                 <div class="home-badges">
-                  <span class="badge accent">
+                  <span class="badge accent" id="homeCfBadge">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round"
                         d="M3 13.5V19a1 1 0 001 1h3a1 1 0 001-1v-5.5M9 8V19a1 1 0 001 1h3a1 1 0 001-1V8M15 11v8a1 1 0 001 1h3a1 1 0 001-1v-8" />
                     </svg>
-                    CF Rating 389 · Newbie
+                    <span id="homeCfText">CF Rating … · Loading</span>
                   </span>
                   <span class="badge"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                       stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -1408,9 +1630,8 @@
                 </div>
                 <div class="skill-name-text">Problem Solver</div>
                 <p style="font-size:13px;color:var(--muted);margin-top:4px;line-height:1.6;">
-                  I solve algorithmic problems on <strong style="color:var(--text)">Codeforces</strong> with a rating of
-                  <strong style="color:var(--text)">381 (Newbie)</strong>, primarily using C. Every problem is a logic
-                  puzzle... and I like puzzles.
+                  I solve algorithmic problems on <strong style="color:var(--text)">Codeforces</strong> using C. Every
+                  problem is a logic puzzle — and that problem-solving mindset extends into everything I build.
                 </p>
               </div>
               <div class="skill-item reveal d1">
@@ -1450,26 +1671,78 @@
           </div>
         </div>
 
-        <!-- ──── SKILLS ──── -->
+        <!-- ──── SKILLS (MCU CIRCUIT BOARD DESIGN) ──── -->
         <div class="section" id="tab-skills">
           <div class="skills-inner">
             <div class="sec-eyebrow">Skills</div>
             <h2>What I work with</h2>
+
+            <!-- MCU Chip Header -->
+            <div class="mcu-chip-container">
+              <div class="mcu-chip">
+                <div class="mcu-pins left">
+                  <div class="mcu-pin"></div>
+                  <div class="mcu-pin"></div>
+                  <div class="mcu-pin"></div>
+                  <div class="mcu-pin"></div>
+                </div>
+                <div class="mcu-chip-body">Languages &amp; Tools</div>
+                <div class="mcu-pins right">
+                  <div class="mcu-pin"></div>
+                  <div class="mcu-pin"></div>
+                  <div class="mcu-pin"></div>
+                  <div class="mcu-pin"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Circuit Traces SVG -->
+            <div class="circuit-traces">
+              <svg viewBox="0 0 800 70" preserveAspectRatio="none">
+                <!-- Main vertical from chip -->
+                <line class="trace-line" x1="400" y1="0" x2="400" y2="25" />
+                <!-- Horizontal bus -->
+                <line class="trace-line" x1="100" y1="25" x2="700" y2="25" />
+                <!-- Drops to each card column -->
+                <line class="trace-line" x1="100" y1="25" x2="100" y2="70" />
+                <line class="trace-line" x1="250" y1="25" x2="250" y2="70" />
+                <line class="trace-line" x1="400" y1="25" x2="400" y2="70" />
+                <line class="trace-line" x1="550" y1="25" x2="550" y2="70" />
+                <line class="trace-line" x1="700" y1="25" x2="700" y2="70" />
+                <!-- Junction dots -->
+                <circle class="trace-dot" cx="100" cy="25" r="3" />
+                <circle class="trace-dot" cx="250" cy="25" r="3" />
+                <circle class="trace-dot" cx="400" cy="25" r="3" />
+                <circle class="trace-dot" cx="550" cy="25" r="3" />
+                <circle class="trace-dot" cx="700" cy="25" r="3" />
+                <!-- Glow traces -->
+                <line class="trace-glow" x1="400" y1="0" x2="400" y2="25" stroke-dasharray="8 4" />
+                <line class="trace-glow" x1="100" y1="25" x2="700" y2="25" stroke-dasharray="12 6" />
+                <line class="trace-glow" x1="100" y1="25" x2="100" y2="70" stroke-dasharray="8 4" />
+                <line class="trace-glow" x1="400" y1="25" x2="400" y2="70" stroke-dasharray="8 4" />
+                <line class="trace-glow" x1="700" y1="25" x2="700" y2="70" stroke-dasharray="8 4" />
+              </svg>
+            </div>
+
+            <!-- Skills Cards Grid -->
             <div class="skills-grid">
+
+              <!-- C -->
               <div class="skill-item reveal">
-                <div class="skill-emoji">
-                  <!-- C language icon -->
+                <div class="skill-icon-wrap">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
                     stroke-linejoin="round">
                     <path d="M17.5 8.5A6 6 0 1 0 17.5 15.5" />
                   </svg>
                 </div>
                 <div class="skill-name-text">C</div>
-                <div class="skill-sub">Primary language · algorithms</div>
+                <div class="skill-desc">My primary language for algorithmic problem solving on Codeforces and low-level
+                  embedded systems programming.</div>
               </div>
+
+              <!-- Python -->
               <div class="skill-item reveal d1">
-                <div class="skill-emoji">
-                  <!-- Python icon -->
+                <div class="skill-icon-wrap">
                   <svg viewBox="0 0 24 24" fill="currentColor">
                     <path
                       d="M11.914 0C5.82 0 6.2 2.656 6.2 2.656l.007 2.752h5.814v.826H3.9S0 5.789 0 11.969c0 6.18 3.403 5.96 3.403 5.96h2.031v-2.867s-.109-3.402 3.35-3.402h5.769s3.24.052 3.24-3.13V3.19S18.28 0 11.914 0zm-3.21 1.839a1.047 1.047 0 1 1 0 2.094 1.047 1.047 0 0 1 0-2.094z" />
@@ -1478,37 +1751,41 @@
                   </svg>
                 </div>
                 <div class="skill-name-text">Python</div>
-                <div class="skill-sub">Scripting · automation</div>
+                <div class="skill-desc">Used for scripting, automation, and rapid prototyping. A versatile tool in my
+                  development toolkit.</div>
               </div>
+
+              <!-- JavaScript -->
               <div class="skill-item reveal d2">
-                <div class="skill-emoji">
-                  <!-- JavaScript icon -->
+                <div class="skill-icon-wrap">
                   <svg viewBox="0 0 24 24" fill="currentColor">
-                     <path
+                    <path
                       d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z" />
                   </svg>
                 </div>
                 <div class="skill-name-text">JavaScript</div>
-                <div class="skill-sub">Web · DOM · async</div>
+                <div class="skill-desc">Building interactive web experiences with DOM manipulation, async patterns, and
+                  modern ES6+ features.</div>
               </div>
+
+              <!-- TypeScript -->
               <div class="skill-item reveal d3">
-                <div class="skill-emoji">
-                  <!-- TypeScript icon -->
+                <div class="skill-icon-wrap">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round">
                     <rect x="3" y="3" width="18" height="18" rx="2" />
-
                     <path d="M7 14h3M8.5 14v4" />
-
                     <path d="M13 18h2.5a1.5 1.5 0 0 0 0-3h-1a1.5 1.5 0 0 1 0-3H17" />
                   </svg>
                 </div>
                 <div class="skill-name-text">TypeScript</div>
-                <div class="skill-sub">Type-safe development</div>
+                <div class="skill-desc">A strict syntactical superset of JavaScript, adding optional static typing
+                  designed for large applications.</div>
               </div>
+
+              <!-- IoT / Embedded -->
               <div class="skill-item reveal">
-                <div class="skill-emoji">
-                  <!-- IoT / Plug icon -->
+                <div class="skill-icon-wrap">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
                     stroke-linejoin="round">
                     <path d="M12 22v-5" />
@@ -1518,11 +1795,13 @@
                   </svg>
                 </div>
                 <div class="skill-name-text">IoT / Embedded</div>
-                <div class="skill-sub">Microcontrollers · sensors</div>
+                <div class="skill-desc">Hands-on experience with microcontrollers, sensors, and building smart connected
+                  devices from scratch.</div>
               </div>
+
+              <!-- Algorithms -->
               <div class="skill-item reveal d1">
-                <div class="skill-emoji">
-                  <!-- Algorithm / CPU icon -->
+                <div class="skill-icon-wrap">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
                     stroke-linejoin="round">
                     <rect x="7" y="7" width="10" height="10" rx="1" />
@@ -1541,11 +1820,13 @@
                   </svg>
                 </div>
                 <div class="skill-name-text">Algorithms</div>
-                <div class="skill-sub">Data structures · CF</div>
+                <div class="skill-desc">Data structures, competitive programming on Codeforces, and algorithmic problem
+                  solving with C.</div>
               </div>
+
+              <!-- Web Dev -->
               <div class="skill-item reveal d2">
-                <div class="skill-emoji">
-                  <!-- Web Dev / Globe icon -->
+                <div class="skill-icon-wrap">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
                     stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10" />
@@ -1555,19 +1836,23 @@
                   </svg>
                 </div>
                 <div class="skill-name-text">Web Dev</div>
-                <div class="skill-sub">HTML · CSS · JS</div>
+                <div class="skill-desc">Building responsive websites with HTML, CSS, and JavaScript — from static pages
+                  to interactive apps.</div>
               </div>
+
+              <!-- Git & GitHub -->
               <div class="skill-item reveal d3">
-                <div class="skill-emoji">
-                  <!-- GitHub icon -->
+                <div class="skill-icon-wrap">
                   <svg viewBox="0 0 24 24" fill="currentColor">
                     <path
                       d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
                   </svg>
                 </div>
                 <div class="skill-name-text">Git &amp; GitHub</div>
-                <div class="skill-sub">Version control · GitHub</div>
+                <div class="skill-desc">Version control workflow, collaborative development, and open source project
+                  management.</div>
               </div>
+
             </div>
           </div>
         </div>
@@ -1620,110 +1905,111 @@
               </div>
             </div>
           </div>
+        </div><!-- /tab-codeforces -->
 
-          <!-- ──── EDUCATION ──── -->
-          <div class="section" id="tab-education">
-            <div class="edu-inner">
-              <div class="sec-eyebrow">Education</div>
-              <h2>Academic journey</h2>
-              <div class="edu-list">
-
-                <div class="edu-card reveal">
-                  <div>
-                    <div class="edu-deg">BSc in Computer Science & Engineering</div>
-                    <div class="edu-school-name">Sheikh Borhanuddin University and College</div>
-                    <div class="edu-detail-text">Studying algorithms, systems, networks and building things that matter.
-                    </div>
-                  </div>
-                  <span class="pill-active">Running</span>
-                </div>
-
-                <div class="edu-card reveal d1">
-                  <div>
-                    <div class="edu-deg">HSC — Science</div>
-                    <div class="edu-school-name">Dr. Mahbubur Rahman Mollah College</div>
-                    <div class="edu-detail-text">GPA <strong style="color:var(--text)">4.50</strong> · Science group ·
-                      Higher Secondary Certificate</div>
-                  </div>
-                  <span class="pill-done">Passed</span>
-                </div>
-
+        <!-- ──── PROJECTS ──── -->
+        <div class="section" id="tab-projects">
+          <div class="skills-inner">
+            <div class="sec-eyebrow">Projects</div>
+            <h2>GitHub Repositories</h2>
+            <div id="projectsGrid"
+              style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-top:24px;">
+              <div class="cf-loading" id="projectsLoading">
+                <div class="cf-spinner"></div>
+                <span>Loading projects…</span>
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- ──── MAIL ──── -->
-          <div class="section" id="tab-mail">
-            <div class="mail-inner">
-              <div>
-                <div class="sec-eyebrow">Contact</div>
-                <div class="mail-big">
-                  Let's build something<br /><em>together.</em>
-                </div>
-              </div>
-
-              <a href="mailto:muhammadrifat67@gmail.com" class="mail-card reveal">
-                <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-                </svg>
+        <!-- ──── EDUCATION ──── -->
+        <div class="section" id="tab-education">
+          <div class="edu-inner">
+            <div class="sec-eyebrow">Education</div>
+            <h2>Academic journey</h2>
+            <div class="edu-list">
+              <div class="edu-card reveal">
                 <div>
-                  <div style="font-size:10px;font-family:var(--mono);color:var(--faint);margin-bottom:2px;">email</div>
-                  <div class="mail-addr-text">muhammadrifat67@gmail.com</div>
+                  <div class="edu-deg">BSc in Computer Science & Engineering</div>
+                  <div class="edu-school-name">Sheikh Borhanuddin University and College</div>
+                  <div class="edu-detail-text">Studying algorithms, systems, networks and building things that matter.
+                  </div>
                 </div>
-              </a>
-
-              <div class="home-cta reveal d1">
-                <a href="https://github.com/RifatParadoxical" target="_blank" class="btn btn-solid">
-                  <svg fill="currentColor" viewBox="0 0 24 24">
-                    <path
-                      d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-                  </svg>
-                  GitHub
-                </a>
-                <a href="#" download class="btn btn-outline">
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                  </svg>
-                  Download Resume
-                </a>
+                <span class="pill-active">Running</span>
               </div>
-
-              <div style="border-top:1px solid var(--border);padding-top:24px;" class="reveal d2">
-                <div class="social-label">Find me on</div>
-                <div class="social-grid">
-                  <a href="https://facebook.com/rifat.jr.dev" target="_blank" class="social-pill">Facebook</a>
-                  <a href="https://reddit.com/user/Obvious_Carry_7660" target="_blank" class="social-pill">Reddit</a>
-                  <a href="https://linkedin.com/in/md-rifat-dev" target="_blank" class="social-pill">LinkedIn</a>
-                  <a href="https://instagram.com/rifat.jr.dev" target="_blank" class="social-pill">Instagram</a>
-                  <a href="https://www.youtube.com/@BanglayCoding" target="_blank" class="social-pill">YouTube</a>
-                  <a href="https://codeforces.com/profile/muhammad_rifat" target="_blank"
-                    class="social-pill">Codeforces</a>
-                  <a href="https://github.com/RifatParadoxical" target="_blank" class="social-pill">GitHub</a>
-                  <a href="https://chabondhu.com/rifatparadoxical" target="_blank" class="social-pill"><svg width="14"
-                      height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                      stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M17 8h1a4 4 0 0 1 0 8h-1" />
-                      <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z" />
-                      <line x1="6" y1="2" x2="6" y2="4" />
-                      <line x1="10" y1="2" x2="10" y2="4" />
-                      <line x1="14" y1="2" x2="14" y2="4" />
-                    </svg> ChaBondhu</a>
+              <div class="edu-card reveal d1">
+                <div>
+                  <div class="edu-deg">HSC — Science</div>
+                  <div class="edu-school-name">Dr. Mahbubur Rahman Mollah College</div>
+                  <div class="edu-detail-text">GPA <strong style="color:var(--text)">4.50</strong> · Science group ·
+                    Higher Secondary Certificate</div>
                 </div>
+                <span class="pill-done">Passed</span>
               </div>
-
             </div>
           </div>
+        </div>
 
-        </div><!-- /outer-card -->
+        <!-- ──── MAIL ──── -->
+        <div class="section" id="tab-mail">
+          <div class="mail-inner">
+            <div>
+              <div class="sec-eyebrow">Contact</div>
+              <div class="mail-big">
+                Let's build something<br /><em>together.</em>
+              </div>
+            </div>
+            <a href="mailto:muhammadrifat67@gmail.com" class="mail-card reveal">
+              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+              </svg>
+              <div>
+                <div style="font-size:10px;font-family:var(--mono);color:var(--faint);margin-bottom:2px;">email</div>
+                <div class="mail-addr-text">muhammadrifat67@gmail.com</div>
+              </div>
+            </a>
+            <div class="home-cta reveal d1">
+              <a href="https://github.com/RifatParadoxical" target="_blank" class="btn btn-solid">
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                </svg>
+                GitHub
+              </a>
+              <a href="#" download class="btn btn-outline">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                Download Resume
+              </a>
+            </div>
+            <div style="border-top:1px solid var(--border);padding-top:24px;" class="reveal d2">
+              <div class="social-label">Find me on</div>
+              <div class="social-grid">
+                <a href="https://facebook.com/rifat.jr.dev" target="_blank" class="social-pill">Facebook</a>
+                <a href="https://reddit.com/user/Obvious_Carry_7660" target="_blank" class="social-pill">Reddit</a>
+                <a href="https://linkedin.com/in/md-rifat-dev" target="_blank" class="social-pill">LinkedIn</a>
+                <a href="https://instagram.com/rifat.jr.dev" target="_blank" class="social-pill">Instagram</a>
+                <a href="https://www.youtube.com/@BanglayCoding" target="_blank" class="social-pill">YouTube</a>
+                <a href="https://codeforces.com/profile/muhammad_rifat" target="_blank"
+                  class="social-pill">Codeforces</a>
+                <a href="https://github.com/RifatParadoxical" target="_blank" class="social-pill">GitHub</a>
+                <a href="https://chabondhu.com/rifatparadoxical" target="_blank" class="social-pill">ChaBondhu</a>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <!-- small footer -->
-        <p
-          style="font-family:var(--mono);font-size:10px;color:var(--faint);text-align:center;letter-spacing:0.06em;padding-bottom:8px;">
-          ©
-          <script>document.write(new Date().getFullYear())</script> Muhammad Rifat
-        </p>
+      </div><!-- /outer-card -->
+
+      <!-- small footer -->
+      <p
+        style="font-family:var(--mono);font-size:10px;color:var(--faint);text-align:center;letter-spacing:0.06em;padding-bottom:8px;">
+        ©
+        <script>document.write(new Date().getFullYear())</script> Muhammad Rifat
+      </p>
 
     </main>
   </div>
@@ -1846,7 +2132,6 @@
           ]);
           const u = infos[0];
 
-          // count unique AC problems in fetched batch
           const acSet = new Set();
           subs.forEach(s => { if (s.verdict === 'OK') acSet.add(`${s.problem.contestId}-${s.problem.index}`); });
 
@@ -1867,30 +2152,108 @@
 
           body.innerHTML = strip + buildSparkline(ratingHist) + buildSubs(subs);
 
-          // update static left card with live values
+          // update codeforces tab static card
           const rows = document.querySelectorAll('#tab-codeforces .cf-row-val');
           if (rows[0] && u.rating) rows[0].textContent = u.rating;
           if (rows[1] && u.rank) rows[1].textContent = u.rank.charAt(0).toUpperCase() + u.rank.slice(1);
           const badge = document.querySelector('#tab-codeforces .cf-rank-badge');
           if (badge && u.rank) badge.textContent = u.rank.toUpperCase();
 
+          // ★ UPDATE HOMEPAGE CF BADGE DYNAMICALLY
+          const homeCfText = document.getElementById('homeCfText');
+          if (homeCfText && u.rating) {
+            const rankName = u.rank ? u.rank.charAt(0).toUpperCase() + u.rank.slice(1) : 'Newbie';
+            homeCfText.textContent = `CF Rating ${u.rating} · ${rankName}`;
+          }
+
         } catch (e) {
           body.innerHTML = `<div class="cf-loading">
             <span style="color:var(--faint);font-family:var(--mono);font-size:12px;">
               Could not load live data — ${e.message}
             </span></div>`;
+          // fallback for homepage badge
+          const homeCfText = document.getElementById('homeCfText');
+          if (homeCfText) homeCfText.textContent = 'CF Rating — · Offline';
         }
       }
 
-      // load when codeforces tab is first opened
-      const cfSection = document.getElementById('tab-codeforces');
-      if (cfSection) {
+      // Load CF data immediately (for homepage badge) and when CF tab opens
+      load();
+    })();
+
+    /* ── GITHUB PROJECTS ── */
+    (function () {
+      const REPOS = [
+        'RifatParadoxical/Dancing-Servos',
+        'RifatParadoxical/Arduino-Ultrasonic-Distance-Meter',
+        'RifatParadoxical/LED-Fade'
+      ];
+      const grid = document.getElementById('projectsGrid');
+      if (!grid) return;
+
+      const langColors = {
+        'C++': '#f34b7d', 'C': '#555555', 'Python': '#3572A5',
+        'JavaScript': '#f1e05a', 'TypeScript': '#3178c6', 'HTML': '#e34c26',
+        'CSS': '#563d7c', 'Arduino': '#bd79d1', 'Shell': '#89e051'
+      };
+
+      function timeAgo(d) {
+        const s = Math.floor((Date.now() - new Date(d)) / 1000);
+        if (s < 60) return 'just now';
+        if (s < 3600) return Math.floor(s / 60) + 'm ago';
+        if (s < 86400) return Math.floor(s / 3600) + 'h ago';
+        if (s < 2592000) return Math.floor(s / 86400) + 'd ago';
+        return Math.floor(s / 2592000) + 'mo ago';
+      }
+
+      function buildCard(r) {
+        const lc = langColors[r.language] || 'var(--faint)';
+        return `<a href="${r.html_url}" target="_blank" class="skill-item" style="text-decoration:none;color:inherit;display:block;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
+            </svg>
+            <span style="font-family:var(--mono);font-size:13px;font-weight:600;color:var(--accent);">${r.name}</span>
+          </div>
+          <div class="skill-desc" style="margin-bottom:14px;">${r.description || 'No description available.'}</div>
+          <div style="display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:11px;color:var(--faint);">
+            ${r.language ? `<span style="display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:50%;background:${lc};display:inline-block;"></span>${r.language}</span>` : ''}
+            <span style="display:flex;align-items:center;gap:3px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              ${r.stargazers_count}
+            </span>
+            <span style="display:flex;align-items:center;gap:3px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 18V6l10 6-10 6z"/></svg>
+              ${r.forks_count}
+            </span>
+            <span>${timeAgo(r.updated_at)}</span>
+          </div>
+        </a>`;
+      }
+
+      async function loadProjects() {
+        try {
+          const results = await Promise.all(
+            REPOS.map(repo =>
+              fetch(`https://api.github.com/repos/${repo}`, { cache: 'no-cache' })
+                .then(r => r.json())
+            )
+          );
+          grid.innerHTML = results.map(r => buildCard(r)).join('');
+        } catch (e) {
+          grid.innerHTML = `<div class="cf-loading"><span style="color:var(--faint);font-family:var(--mono);font-size:12px;">Could not load projects — ${e.message}</span></div>`;
+        }
+      }
+
+      // load when projects tab is first opened
+      const projSection = document.getElementById('tab-projects');
+      if (projSection) {
         const obs = new MutationObserver((_, o) => {
-          if (cfSection.classList.contains('active')) { o.disconnect(); load(); }
+          if (projSection.classList.contains('active')) { o.disconnect(); loadProjects(); }
         });
-        obs.observe(cfSection, { attributes: true, attributeFilter: ['class'] });
-        if (cfSection.classList.contains('active')) load();
-      } else { load(); }
+        obs.observe(projSection, { attributes: true, attributeFilter: ['class'] });
+        if (projSection.classList.contains('active')) loadProjects();
+      }
     })();
 
     /* ── CURSOR FOLLOWER ── */
@@ -1902,20 +2265,17 @@
       let mx = window.innerWidth / 2, my = window.innerHeight / 2;
       let rx = mx, ry = my;
 
-      // Real cursor position
       document.addEventListener('mousemove', e => {
         mx = e.clientX; my = e.clientY;
         dot.style.left = mx + 'px';
         dot.style.top = my + 'px';
       });
 
-      // Expand ring when hovering interactive elements
       document.querySelectorAll('a,button,[onclick]').forEach(el => {
         el.addEventListener('mouseenter', () => ring.classList.add('expand'));
         el.addEventListener('mouseleave', () => ring.classList.remove('expand'));
       });
 
-      // Smooth lag for the ring
       function lerp(a, b, t) { return a + (b - a) * t; }
       function loop() {
         rx = lerp(rx, mx, 0.12);
