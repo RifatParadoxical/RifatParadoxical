@@ -3,7 +3,7 @@
 <img width="100%" src="https://capsule-render.vercel.app/api?type=speech&color=gradient&customColorList=6,11,20&height=200&section=header&text=Hey,%20I'm%20Rifat!&fontSize=70&fontColor=fff&animation=twinkling&fontAlignY=38&reversal=true"/>
 
 <a href="https://git.io/typing-svg">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&pause=1000&color=00FFB3&center=true&vCenter=true&width=650&lines=Learning+C+Programming+%F0%9F%96%A5%EF%B8%8F;Interested+At+Embedded+Systems+%26+IoT+%F0%9F%94%8C;Web+Dev+(still+learning!)+%F0%9F%8C%B1;From+Bangladesh+%F0%9F%87%A7%F0%9F%87%A9+%7C+Curious+by+Nature+%F0%9F%94%8D" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&pause=1000&color=00FFB3&center=true&vCenter=true&width=650&lines=Learning+C+Programming+%F0%9F%96%A5%EF%B8%8F;Interested+At+Embedded+Systems+%26+IoT+%F0%9F%94%8C;From+Bangladesh+%F0%9F%87%A7%F0%9F%87%A9+%7C+Curious+by+Nature+%F0%9F%94%8D" alt="Typing SVG" />
 </a>
 
 <br/><br/>
@@ -19,7 +19,7 @@
 ```c
 #include <stdio.h>
 
-int main() {
+vpid main() {
     char* name        = "Rifat";
     char* location    = "Bangladesh";
     char* status      = "Passionate ofc!";
@@ -38,25 +38,25 @@ int main() {
     };
 
     char* interests[] = {
-        "🔌 Microcontrollers & circuits",
-        "🌐 Connected smart devices",
-        "💡 Building things that exist in the real world",
+        "Microcontrollers & circuits",
+        "Connected smart devices",
+        "Building things that exist in the real world",
         NULL
     };
 
     char* beyondCode[] = {
-        "🗣️ Debating",
-        "🤝 Volunteerism",
-        "🎓 Campus Ambassador",
-        NULL
+        "Volunteer",
+        "Campus Ambassador",
+        "Writter",
+        "Chess hater <3",
+        "and son on, in my imagination"
     };
 
     printf("Hi! I'm %s from %s.\n", name, location);
-    printf("I'm a %s who loves learning.\n", status);
+    printf("I'm %s who loves learning.\n", status);
     printf("Right now I'm all about low-level programming & embedded systems!\n");
-
-    return 0;
 }
+
 ```
 
 ---
