@@ -2,2291 +2,3371 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Muhammad Rifat</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&display=swap"
-    rel="stylesheet" />
-
-  <style>
-    /* ─── RESET ─── */
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0
-    }
-
-    html {
-      scroll-behavior: smooth;
-      -webkit-text-size-adjust: 100%
-    }
-
-    /* ─── TOKENS ─── */
-    :root {
-      --bg: #090909;
-      --surface: #141414;
-      --border: #1e1e1e;
-      --border2: #333;
-      --text: #e5e5e5;
-      --muted: #a3a3a3;
-      --faint: #666;
-      --accent: #10b981;
-      --accent-bg: #0d1a14;
-      --accent-bd: #166534;
-      --radius: 8px;
-      --radius-lg: 10px;
-      --mono: 'Geist Mono', monospace;
-      --serif: 'Instrument Serif', serif;
-      --sans: 'Geist', system-ui, sans-serif;
-      --nav-w: 64px;
-      --nav-h: 60px;
-      --page-p: 32px;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 15px;
-      line-height: 1.65;
-      min-height: 100vh;
-    }
-
-    /* ─── LAYOUT SHELL ─── */
-    .shell {
-      display: grid;
-      /* desktop: side nav + main */
-      grid-template-columns: var(--nav-w) 1fr;
-      grid-template-rows: 1fr;
-      min-height: 100vh;
-    }
-
-    /* ─── SIDE NAV (desktop) ─── */
-    .sidenav {
-      position: fixed;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: var(--nav-w);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      background: var(--surface);
-      border-right: 1px solid var(--border);
-      z-index: 100;
-    }
-
-    .nav-logo {
-      position: absolute;
-      top: 20px;
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--faint);
-      letter-spacing: 0.08em;
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-      transform: rotate(180deg);
-      user-select: none;
-    }
-
-    .nav-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius);
-      border: 1px solid transparent;
-      background: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: var(--muted);
-      transition: all 0.18s;
-      text-decoration: none;
-      position: relative;
-    }
-
-    .nav-btn svg {
-      width: 18px;
-      height: 18px;
-      stroke-width: 1.5;
-    }
-
-    .nav-btn:hover {
-      background: var(--bg);
-      border-color: var(--border);
-      color: var(--text);
-    }
-
-    .nav-btn.active {
-      background: var(--accent-bg);
-      border-color: var(--accent-bd);
-      color: var(--accent);
-    }
-
-    /* tooltip */
-    .nav-btn::after {
-      content: attr(data-tip);
-      position: absolute;
-      left: calc(100% + 10px);
-      top: 50%;
-      transform: translateY(-50%);
-      background: var(--text);
-      color: var(--surface);
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.06em;
-      padding: 4px 8px;
-      border-radius: 5px;
-      white-space: nowrap;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.15s;
-    }
-
-    .nav-btn:hover::after {
-      opacity: 1;
-    }
-
-    /* ─── MAIN CONTENT ─── */
-    main {
-      margin-left: var(--nav-w);
-      padding: var(--page-p);
-      display: flex;
-      flex-direction: column;
-      gap: var(--page-p);
-      min-height: 100vh;
-    }
-
-    /* ─── THE BIG OUTER CARD (mirrors wireframe outer rect) ─── */
-    .outer-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
-
-    /* ─── SECTION WRAPPER ─── */
-    .section {
-      display: none;
-      padding: 0;
-    }
-
-    .section.active {
-      display: block;
-    }
-
-    /* ─── HOME SECTION ─── */
-    .home-inner {
-      padding: 36px 36px 0 36px;
-    }
-
-    .home-top {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 32px;
-      align-items: flex-start;
-    }
-
-    .home-meta {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--faint);
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .dot-live {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #22c55e;
-      animation: blink 2s infinite;
-    }
-
-    @keyframes blink {
-
-      0%,
-      100% {
-        opacity: 1
-      }
-
-      50% {
-        opacity: .3
-      }
-    }
-
-    h1 {
-      font-family: var(--serif);
-      font-size: clamp(2.2rem, 5vw, 3.4rem);
-      font-weight: 400;
-      line-height: 1.08;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
-    }
-
-    h1 em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .home-desc {
-      font-size: 0.9rem;
-      color: var(--muted);
-      max-width: 400px;
-      line-height: 1.7;
-    }
-
-    .home-desc strong {
-      color: var(--text);
-      font-weight: 500;
-    }
-
-    /* avatar */
-    .avatar-box {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .avatar-box svg {
-      width: 48px;
-      height: 48px;
-      color: var(--faint);
-    }
-
-    /* cf badge row */
-    .home-badges {
-      display: flex;
-      gap: 8px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 11px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.04em;
-      color: var(--muted);
-    }
-
-    .badge.accent {
-      background: var(--accent-bg);
-      border-color: var(--accent-bd);
-      color: var(--accent);
-    }
-
-    .badge svg {
-      width: 12px;
-      height: 12px;
-    }
-
-    /* cta row */
-    .home-cta {
-      display: flex;
-      gap: 10px;
-      margin-top: 24px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 9px 18px;
-      border-radius: var(--radius);
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.04em;
-      text-decoration: none;
-      cursor: pointer;
-      border: 1px solid transparent;
-      transition: all 0.18s;
-      line-height: 1;
-    }
-
-    .btn svg {
-      width: 13px;
-      height: 13px;
-    }
-
-    .btn-solid {
-      background: var(--text);
-      color: var(--surface);
-    }
-
-    .btn-solid:hover {
-      background: #d1d1d1;
-    }
-
-    .btn-outline {
-      background: transparent;
-      border-color: var(--border2);
-      color: var(--text);
-    }
-
-    .btn-outline:hover {
-      background: var(--bg);
-      border-color: var(--border2);
-    }
-
-    /* ── SOCIAL MEDIA SECTION (bottom of home card) ── */
-    .home-social {
-      margin-top: 32px;
-      border-top: 1px solid var(--border);
-      padding: 24px 36px;
-    }
-
-    .social-label {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--faint);
-      margin-bottom: 14px;
-    }
-
-    .social-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .social-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 7px 13px;
-      border-radius: 7px;
-      border: 1px solid var(--border);
-      background: var(--accent-bg);
-      font-size: 12px;
-      color: var(--muted);
-      text-decoration: none;
-      transition: all 0.18s;
-    }
-
-    .social-pill:hover {
-      border-color: var(--border2);
-      color: var(--text);
-      background: var(--surface);
-    }
-
-    .social-pill svg {
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
-    }
-
-    /* ─── ABOUT SECTION ─── */
-    .about-inner {
-      padding: 36px;
-    }
-
-    /* ─── SKILLS SECTION (MCU / Circuit Board Design) ─── */
-    .skills-inner {
-      padding: 36px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Subtle PCB grid background */
-    .skills-inner::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(87, 87, 86, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(87, 87, 86, 0.08) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-    }
-
-    /* ── MCU CHIP HEADER ── */
-    .mcu-chip-container {
-      display: flex;
-      justify-content: center;
-      margin-top: 30px;
-      margin-bottom: 0;
-      position: relative;
-      z-index: 2;
-    }
-
-    .mcu-chip {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 0;
-    }
-
-    .mcu-chip-body {
-      background: var(--surface);
-      border: 1.5px solid var(--border2);
-      border-radius: 6px;
-      padding: 12px 32px;
-      font-family: var(--mono);
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      color: var(--text);
-      position: relative;
-      z-index: 2;
-      white-space: nowrap;
-      text-transform: none;
-      box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.03),
-        0 4px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Chip notch */
-    .mcu-chip-body::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: -1.5px;
-      transform: translateY(-50%);
-      width: 6px;
-      height: 14px;
-      background: var(--bg);
-      border: 1.5px solid var(--border2);
-      border-left: none;
-      border-radius: 0 4px 4px 0;
-    }
-
-    /* Pin rows on left and right */
-    .mcu-pins {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    .mcu-pins.left {
-      padding-right: 0;
-    }
-
-    .mcu-pins.right {
-      padding-left: 0;
-    }
-
-    .mcu-pin {
-      width: 18px;
-      height: 3px;
-      background: var(--border2);
-      border-radius: 1px;
-      position: relative;
-    }
-
-    .mcu-pin::after {
-      content: '';
-      position: absolute;
-      top: -1px;
-      width: 4px;
-      height: 5px;
-      background: var(--border2);
-      border-radius: 1px;
-    }
-
-    .mcu-pins.left .mcu-pin::after {
-      left: 0;
-    }
-
-    .mcu-pins.right .mcu-pin::after {
-      right: 0;
-    }
-
-    /* ── CIRCUIT TRACES ── */
-    .circuit-traces {
-      position: relative;
-      height: 70px;
-      margin-bottom: 0;
-      z-index: 1;
-    }
-
-    .circuit-traces svg {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    .trace-line {
-      stroke: var(--border2);
-      stroke-width: 1.5;
-      fill: none;
-      opacity: 0.5;
-    }
-
-    .trace-dot {
-      fill: var(--accent);
-      opacity: 0.7;
-    }
-
-    /* Animated glow on traces */
-    .trace-glow {
-      stroke: var(--accent);
-      stroke-width: 1.5;
-      fill: none;
-      opacity: 0;
-      animation: traceGlow 3s ease-in-out infinite;
-    }
-
-    @keyframes traceGlow {
-
-      0%,
-      100% {
-        opacity: 0;
-        stroke-dashoffset: 200;
-      }
-
-      50% {
-        opacity: 0.6;
-        stroke-dashoffset: 0;
-      }
-    }
-
-    .trace-glow:nth-child(2) {
-      animation-delay: 0.5s;
-    }
-
-    .trace-glow:nth-child(4) {
-      animation-delay: 1s;
-    }
-
-    .trace-glow:nth-child(6) {
-      animation-delay: 1.5s;
-    }
-
-    /* ── SKILLS GRID ── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 14px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .skill-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 24px 22px;
-      transition: border-color 0.25s, background 0.25s, transform 0.25s, box-shadow 0.25s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Subtle corner accent */
-    .skill-item::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 40px;
-      height: 40px;
-      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 70%);
-      pointer-events: none;
-    }
-
-    .skill-item:hover {
-      border-color: var(--accent-bd);
-      background: var(--accent-bg);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-    }
-
-    .skill-icon-wrap {
-      width: 36px;
-      height: 36px;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--muted);
-    }
-
-    .skill-icon-wrap svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    .skill-name-text {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: var(--text);
-    }
-
-    .skill-desc {
-      font-size: 12px;
-      color: var(--faint);
-      line-height: 1.6;
-      font-family: var(--sans);
-    }
-
-    .skill-sub {
-      font-size: 11px;
-      color: var(--faint);
-      font-family: var(--mono);
-    }
-
-    /* ── Old skill-emoji for backward compat (about section) ── */
-    .skill-emoji {
-      width: 28px;
-      height: 28px;
-      margin-bottom: 10px;
-      color: var(--accent);
-      flex-shrink: 0;
-    }
-
-    .skill-emoji svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    /* ─── CODEFORCES SECTION ─── */
-    .cf-inner {
-      padding: 36px;
-    }
-
-    .cf-layout {
-      display: grid;
-      grid-template-columns: 240px 1fr;
-      gap: 16px;
-      margin-top: 24px;
-    }
-
-    .cf-stats-card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: var(--bg);
-    }
-
-    .cf-stats-head {
-      padding: 16px 18px;
-      border-bottom: 1px solid var(--border);
-      background: var(--accent-bg);
-    }
-
-    .cf-handle {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--accent);
-      font-weight: 500;
-    }
-
-    .cf-rank-badge {
-      display: inline-block;
-      margin-top: 6px;
-      padding: 2px 8px;
-      border-radius: 5px;
-      font-family: var(--mono);
-      font-size: 10px;
-      border: 1px solid var(--accent-bd);
-      color: var(--accent);
-      letter-spacing: 0.06em;
-    }
-
-    .cf-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 11px 18px;
-      border-bottom: 1px solid var(--border);
-      font-size: 12px;
-    }
-
-    .cf-row:last-child {
-      border-bottom: none;
-    }
-
-    .cf-row-label {
-      color: var(--faint);
-      font-family: var(--mono);
-    }
-
-    .cf-row-val {
-      color: var(--text);
-      font-family: var(--mono);
-      font-size: 12px;
-    }
-
-    .cf-iframe-box {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: var(--bg);
-    }
-
-    .cf-iframe-bar {
-      padding: 10px 16px;
-      border-bottom: 1px solid var(--border);
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--faint);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--surface);
-    }
-
-    .cf-iframe-bar span {
-      display: flex;
-      gap: 5px;
-    }
-
-    .dot-r {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #ff5f57;
-    }
-
-    .dot-y {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #febc2e;
-    }
-
-    .dot-g {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #28c840;
-    }
-
-    .cf-iframe-box iframe {
-      width: 100%;
-      height: 430px;
-      border: none;
-      display: block;
-    }
-
-    /* ── CF LIVE PANEL ── */
-    .cf-panel {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: var(--bg);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .cf-panel-bar {
-      padding: 10px 16px;
-      border-bottom: 1px solid var(--border);
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--faint);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--surface);
-    }
-
-    .cf-panel-bar span:first-child {
-      display: flex;
-      gap: 5px;
-    }
-
-    .cf-panel-url {
-      flex: 1;
-    }
-
-    .cf-panel-live {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #28c840;
-      animation: blink 2s infinite;
-    }
-
-    .cf-panel-body {
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      flex: 1;
-    }
-
-    /* loading */
-    .cf-loading {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      height: 380px;
-      color: var(--faint);
-      font-family: var(--mono);
-      font-size: 12px;
-    }
-
-    .cf-spinner {
-      width: 16px;
-      height: 16px;
-      border: 2px solid var(--border2);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    /* stat row strip */
-    .cf-stat-strip {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .cf-stat-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px 14px;
-    }
-
-    .cf-stat-label {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--faint);
-      margin-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .cf-stat-val {
-      font-family: var(--mono);
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .cf-stat-val.accent {
-      color: var(--accent);
-    }
-
-    /* sparkline */
-    .cf-chart-wrap {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 14px 16px;
-    }
-
-    .cf-chart-title {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--faint);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 10px;
-    }
-
-    .cf-chart-wrap svg {
-      display: block;
-      width: 100%;
-    }
-
-    /* recent submissions */
-    .cf-subs-wrap {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .cf-subs-title {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--faint);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 10px 14px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .cf-sub-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 14px;
-      border-bottom: 1px solid var(--border);
-      font-size: 12px;
-    }
-
-    .cf-sub-row:last-child {
-      border-bottom: none;
-    }
-
-    .cf-sub-name {
-      flex: 1;
-      font-family: var(--mono);
-      color: var(--muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .cf-verdict {
-      font-family: var(--mono);
-      font-size: 10px;
-      padding: 2px 7px;
-      border-radius: 4px;
-      flex-shrink: 0;
-    }
-
-    .cf-verdict.ok {
-      background: rgba(40, 200, 64, 0.12);
-      color: #28c840;
-      border: 1px solid rgba(40, 200, 64, 0.25);
-    }
-
-    .cf-verdict.wa {
-      background: rgba(255, 95, 87, 0.12);
-      color: #ff5f57;
-      border: 1px solid rgba(255, 95, 87, 0.25);
-    }
-
-    .cf-verdict.tle {
-      background: rgba(254, 188, 46, 0.12);
-      color: #febc2e;
-      border: 1px solid rgba(254, 188, 46, 0.25);
-    }
-
-    .cf-verdict.other {
-      background: var(--bg);
-      color: var(--faint);
-      border: 1px solid var(--border);
-    }
-
-    /* ─── EDUCATION SECTION ─── */
-    .edu-inner {
-      padding: 36px;
-    }
-
-    .edu-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 24px;
-    }
-
-    .edu-card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 22px 24px;
-      background: var(--bg);
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px;
-      align-items: start;
-      transition: border-color 0.18s;
-    }
-
-    .edu-card:hover {
-      border-color: var(--border2);
-    }
-
-    .edu-deg {
-      font-family: var(--serif);
-      font-size: 1.2rem;
-      font-weight: 400;
-      margin-bottom: 4px;
-    }
-
-    .edu-school-name {
-      font-size: 12px;
-      color: var(--accent);
-      font-family: var(--mono);
-      margin-bottom: 6px;
-    }
-
-    .edu-detail-text {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .pill-active {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 3px 9px;
-      border-radius: 5px;
-      font-family: var(--mono);
-      font-size: 10px;
-      border: 1px solid var(--accent-bd);
-      background: var(--accent-bg);
-      color: var(--accent);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .pill-active::before {
-      content: '';
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--accent);
-      animation: blink 1.8s infinite;
-    }
-
-    .pill-done {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 3px 9px;
-      border-radius: 5px;
-      font-family: var(--mono);
-      font-size: 10px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--faint);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    /* ─── MAIL SECTION ─── */
-    .mail-inner {
-      padding: 36px;
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-    }
-
-    .mail-big {
-      font-family: var(--serif);
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      font-weight: 400;
-      line-height: 1.15;
-    }
-
-    .mail-big em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .mail-card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 22px 24px;
-      background: var(--bg);
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      text-decoration: none;
-      color: var(--text);
-      transition: all 0.18s;
-      max-width: 440px;
-    }
-
-    .mail-card:hover {
-      border-color: var(--accent-bd);
-      background: var(--accent-bg);
-    }
-
-    .mail-card svg {
-      width: 20px;
-      height: 20px;
-      color: var(--accent);
-      flex-shrink: 0;
-    }
-
-    .mail-addr-text {
-      font-family: var(--mono);
-      font-size: 13px;
-    }
-
-    /* ─── SECTION HEADING ─── */
-    .sec-eyebrow {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .sec-eyebrow::before {
-      content: '';
-      display: block;
-      width: 16px;
-      height: 1px;
-      background: var(--accent);
-      opacity: .5;
-    }
-
-    h2 {
-      font-family: var(--serif);
-      font-size: clamp(1.7rem, 3.5vw, 2.6rem);
-      font-weight: 400;
-      line-height: 1.12;
-      letter-spacing: -0.015em;
-    }
-
-    /* ─── DIVIDER ─── */
-    .divider {
-      height: 1px;
-      background: var(--border);
-      margin: 0 36px;
-    }
-
-    /* ─── BOTTOM NAV (mobile) ─── */
-    .bottomnav {
-      display: none;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: var(--nav-h);
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      z-index: 200;
-      align-items: center;
-      justify-content: space-around;
-      padding: 0 8px;
-    }
-
-    .bottomnav .nav-btn {
-      flex-direction: column;
-      width: auto;
-      height: auto;
-      gap: 3px;
-      padding: 6px 10px;
-      border-radius: var(--radius);
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: 0.04em;
-    }
-
-    .bottomnav .nav-btn svg {
-      width: 19px;
-      height: 19px;
-    }
-
-    .bottomnav .nav-btn::after {
-      display: none;
-    }
-
-    /* ─── REVEAL ANIMATION ─── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-
-    .reveal.vis {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .d1 {
-      transition-delay: .07s
-    }
-
-    .d2 {
-      transition-delay: .14s
-    }
-
-    .d3 {
-      transition-delay: .21s
-    }
-
-    .d4 {
-      transition-delay: .28s
-    }
-
-    /* ─── RESPONSIVE ─── */
-    @media(max-width:860px) {
-      .cf-layout {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media(max-width:700px) {
-      :root {
-        --page-p: 12px;
-      }
-
-      .shell {
-        grid-template-columns: 1fr;
-      }
-
-      .sidenav {
-        display: none;
-      }
-
-      .bottomnav {
-        display: flex;
-      }
-
-      main {
-        margin-left: 0;
-        padding: 12px 12px calc(var(--nav-h) + 16px) 12px;
-        gap: 12px;
-      }
-
-      .home-inner {
-        padding: 20px 20px 0 20px;
-      }
-
-      .home-top {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
-
-      .avatar-box {
-        width: 80px;
-        height: 80px;
-      }
-
-      .avatar-box svg {
-        width: 36px;
-        height: 36px;
-      }
-
-      .home-social {
-        padding: 18px 20px;
-      }
-
-      .about-inner,
-      .skills-inner,
-      .cf-inner,
-      .edu-inner,
-      .mail-inner {
-        padding: 20px;
-      }
-
-      .edu-card {
-        grid-template-columns: 1fr;
-      }
-
-      .divider {
-        margin: 0 20px;
-      }
-    }
-
-    @media(max-width:420px) {
-      .home-cta .btn span {
-        display: none;
-      }
-
-      .skills-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    /* ── CURSOR FOLLOWER ── */
-    .cursor-dot,
-    .cursor-ring {
-      pointer-events: none;
-      position: fixed;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 9999;
-      transition: opacity 0.3s;
-    }
-
-    .cursor-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--accent);
-      top: 0;
-      left: 0;
-    }
-
-    .cursor-ring {
-      width: 32px;
-      height: 32px;
-      border: 1.5px solid var(--accent);
-      opacity: 0.45;
-      top: 0;
-      left: 0;
-      transition: width 0.2s, height 0.2s, opacity 0.3s, border-color 0.3s;
-    }
-
-    .cursor-ring.expand {
-      width: 48px;
-      height: 48px;
-      opacity: 0.25;
-    }
-
-    body:not(:hover) .cursor-dot,
-    body:not(:hover) .cursor-ring {
-      opacity: 0;
-    }
-
-    @media (hover: none) {
-
-      .cursor-dot,
-      .cursor-ring {
-        display: none;
-      }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Muhammad Rifat</title>
+
+    <meta name="description"
+        content="Muhammad Rifat — CSE student, embedded systems enthusiast and problem solver." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Tahoma:wght@400;700&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        /* =========================================================
+           2006–09 RETRO SYSTEM
+        ========================================================= */
+
+        :root {
+            --bg: #080b0d;
+            --bg2: #0c1114;
+
+            --panel: #11171a;
+            --panel-light: #182125;
+
+            --border: #2c3a40;
+            --border-dark: #050708;
+
+            --teal: #00b4d8;
+            --teal-dark: #007c94;
+            --teal-bright: #43e8ff;
+
+            --text: #e9eeee;
+            --muted: #8e9da2;
+
+            --green: #57d66b;
+            --red: #ff5c62;
+            --yellow: #e8c85c;
+            --purple: #ff76c8;
+
+            --font-ui: Tahoma, Arial, sans-serif;
+            --font-code: "IBM Plex Mono", Consolas, monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+
+            color: var(--text);
+
+            font-family: var(--font-ui);
+            font-size: 13px;
+
+            background:
+                linear-gradient(rgba(255, 255, 255, .015) 1px,
+                    transparent 1px),
+                linear-gradient(90deg,
+                    rgba(255, 255, 255, .012) 1px,
+                    transparent 1px),
+                linear-gradient(#0b0f11,
+                    #050708);
+
+            background-size:
+                4px 4px,
+                4px 4px,
+                auto;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        ::selection {
+            background: var(--teal);
+            color: #001015;
+        }
+
+
+        /* =========================================================
+           OLD INTERNET PAGE WIDTH
+        ========================================================= */
+
+        .site {
+            width: min(1120px, calc(100% - 24px));
+            margin: 0 auto;
+        }
+
+
+        /* =========================================================
+           TOP STATUS STRIP
+        ========================================================= */
+
+        .status-strip {
+            height: 28px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 10px;
+
+            color: #718187;
+
+            font: 10px var(--font-code);
+
+            border-left: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid #030506;
+
+            background:
+                linear-gradient(#172126,
+                    #080c0e);
+
+            box-shadow:
+                inset 0 1px rgba(255, 255, 255, .06);
+        }
+
+        .online {
+            color: var(--green);
+        }
+
+        .online::before {
+            content: "●";
+            margin-right: 5px;
+            text-shadow: 0 0 8px var(--green);
+        }
+
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        header {
+            position: relative;
+
+            border: 1px solid var(--border-dark);
+            border-top: 0;
+
+            background:
+                linear-gradient(180deg,
+                    #27363b 0%,
+                    #182327 15%,
+                    #0e1518 48%,
+                    #080b0d 100%);
+
+            box-shadow:
+                inset 0 1px rgba(255, 255, 255, .13),
+                inset 0 -1px #000,
+                0 5px 18px rgba(0, 0, 0, .55);
+        }
+
+
+        /* =========================================================
+           HEADER BRAND
+        ========================================================= */
+
+        .header-main {
+            min-height: 108px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 20px 22px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand-logo {
+            width: 62px;
+            height: 62px;
+
+            display: grid;
+            place-items: center;
+
+            color: #001014;
+
+            font: bold 18px var(--font-code);
+
+            border: 1px solid #52eaff;
+
+            background:
+                linear-gradient(145deg,
+                    #71efff 0%,
+                    #00b4d8 42%,
+                    #006e82 100%);
+
+            box-shadow:
+                inset 0 2px rgba(255, 255, 255, .65),
+                inset 0 -3px rgba(0, 0, 0, .28),
+                0 0 18px rgba(0, 180, 216, .18);
+        }
+
+        .brand h1 {
+            margin: 0;
+
+            font: bold 25px var(--font-code);
+
+            letter-spacing: -1.5px;
+
+            text-shadow:
+                2px 2px #000;
+        }
+
+        .brand p {
+            margin: 5px 0 0;
+
+            color: #8c9da2;
+
+            font: 10px var(--font-code);
+
+            text-transform: uppercase;
+            letter-spacing: .8px;
+        }
+
+
+        /* =========================================================
+           CLASSIC TABS
+        ========================================================= */
+
+        .tabs {
+            display: flex;
+            align-items: end;
+
+            padding: 0 10px;
+
+            border-top: 1px solid #324249;
+
+            background:
+                linear-gradient(#172226,
+                    #0a0e10);
+        }
+
+        .tab {
+            position: relative;
+
+            display: block;
+
+            padding: 11px 17px 10px;
+
+            color: #8fa1a6;
+
+            font: bold 11px var(--font-code);
+
+            border-left: 1px solid transparent;
+            border-right: 1px solid transparent;
+
+            transition:
+                color .15s,
+                background .15s;
+        }
+
+        .tab:hover,
+        .tab.active {
+            color: #eaffff;
+
+            background:
+                linear-gradient(#20343a,
+                    #0d1518);
+
+            border-left-color: #33464d;
+            border-right-color: #11191c;
+
+            box-shadow:
+                inset 0 1px rgba(255, 255, 255, .08);
+        }
+
+        .tab.active::after {
+            content: "";
+
+            position: absolute;
+
+            left: 8px;
+            right: 8px;
+            bottom: 0;
+
+            height: 2px;
+
+            background: var(--teal);
+
+            box-shadow:
+                0 0 8px var(--teal);
+        }
+
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+            display: grid;
+
+            grid-template-columns: 225px 1fr;
+
+            gap: 22px;
+
+            padding: 22px;
+
+            border: 1px solid var(--border);
+            border-top: 0;
+
+            background:
+                linear-gradient(135deg,
+                    rgba(255, 255, 255, .025),
+                    transparent 40%);
+        }
+
+        .avatar-window {
+            padding: 6px;
+
+            border: 1px solid #34464d;
+
+            background: #050708;
+
+            box-shadow:
+                inset 0 0 0 1px #000,
+                0 8px 20px rgba(0, 0, 0, .45);
+        }
+
+        .avatar-window img {
+            width: 100%;
+            aspect-ratio: 1;
+
+            display: block;
+
+            object-fit: cover;
+
+            border: 1px solid #18262b;
+
+            filter:
+                saturate(.85) contrast(1.05);
+        }
+
+        .avatar-caption {
+            padding: 7px 5px 3px;
+
+            color: var(--muted);
+
+            font: 9px var(--font-code);
+
+            text-align: center;
+        }
+
+        .hero-copy {
+            padding-top: 3px;
+        }
+
+        .small-title {
+            color: var(--teal);
+
+            font: bold 10px var(--font-code);
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-copy h2 {
+            margin: 7px 0 10px;
+
+            font: bold clamp(30px, 5vw, 54px) var(--font-code);
+
+            line-height: 1;
+
+            letter-spacing: -3px;
+
+            text-shadow:
+                2px 2px #000;
+        }
+
+        .hero-copy h2 span {
+            color: var(--teal);
+        }
+
+        .hero-copy .intro {
+            max-width: 670px;
+
+            margin: 0;
+
+            color: #b5c0c3;
+
+            font-size: 14px;
+
+            line-height: 1.65;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 6px;
+
+            margin-top: 17px;
+        }
+
+        .tag {
+            padding: 5px 8px;
+
+            color: #aebdc1;
+
+            font: 10px var(--font-code);
+
+            border: 1px solid #34464c;
+
+            background:
+                linear-gradient(#182226,
+                    #0b1012);
+
+            box-shadow:
+                inset 0 1px rgba(255, 255, 255, .05);
+        }
+
+        .tag::before {
+            content: ">";
+            color: var(--teal);
+            margin-right: 4px;
+        }
+
+
+        /* =========================================================
+           CV BUTTON
+        ========================================================= */
+
+        .cv-button {
+            display: inline-block;
+
+            margin-top: 17px;
+
+            padding: 9px 13px;
+
+            color: #001014;
+
+            font: bold 10px var(--font-code);
+
+            border: 1px solid #5cecff;
+
+            background:
+                linear-gradient(
+                    #4ce6ff,
+                    #0098b8
+                );
+
+            box-shadow:
+                inset 0 1px rgba(255, 255, 255, .55),
+                0 3px 10px rgba(0, 0, 0, .4);
+
+            transition:
+                transform .15s,
+                filter .15s;
+        }
+
+        .cv-button:hover {
+            transform: translateY(-2px);
+
+            filter: brightness(1.1);
+
+            box-shadow:
+                inset 0 1px rgba(255, 255, 255, .65),
+                0 0 14px rgba(0, 180, 216, .25);
+        }
+
+
+        /* =========================================================
+           SECTION BAR
+        ========================================================= */
+
+        .section {
+            margin-top: 16px;
+
+            border: 1px solid var(--border);
+
+            background: #0b1012;
+
+            box-shadow:
+                0 5px 16px rgba(0, 0, 0, .28);
+        }
+
+        .section-title {
+            min-height: 39px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 13px;
+
+            border-bottom: 1px solid #33434a;
+
+            background:
+                linear-gradient(#26383e,
+                    #10191c);
+
+            box-shadow:
+                inset 0 1px rgba(255, 255, 255, .08);
+        }
+
+        .section-title h2 {
+            margin: 0;
+
+            font: bold 12px var(--font-code);
+
+            color: #e1edef;
+
+            text-transform: uppercase;
+        }
+
+        .section-title h2::before {
+            content: "// ";
+
+            color: var(--teal);
+        }
+
+        .section-title span {
+            color: #64767c;
+
+            font: 9px var(--font-code);
+        }
+
+        .section-body {
+            padding: 17px;
+        }
+
+
+        /* =========================================================
+           ABOUT
+        ========================================================= */
+
+        .about-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr 1fr;
+
+            gap: 12px;
+        }
+
+        .mini-panel {
+            min-height: 145px;
+
+            padding: 13px;
+
+            border: 1px solid #29383e;
+
+            background:
+                linear-gradient(145deg,
+                    #151d20,
+                    #0a0e10);
+
+            box-shadow:
+                inset 0 1px rgba(255, 255, 255, .035);
+        }
+
+        .mini-panel h3 {
+            margin: 0 0 10px;
+
+            color: var(--teal);
+
+            font: bold 11px var(--font-code);
+        }
+
+        .mini-panel p {
+            margin: 0;
+
+            color: #89999e;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================================
+           EMBEDDED LAB
+        ========================================================= */
+
+        .hardware-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 14px;
+        }
+
+        .hardware-card {
+            position: relative;
+
+            overflow: hidden;
+
+            border: 1px solid #304249;
+
+            background:
+                linear-gradient(145deg,
+                    #1a2529,
+                    #090d0f 65%);
+
+            box-shadow:
+                inset 0 1px rgba(255, 255, 255, .07),
+                0 7px 13px rgba(0, 0, 0, .25);
+
+            transition:
+                transform .18s,
+                border-color .18s;
+        }
+
+        .hardware-card:hover {
+            transform: translateY(-3px);
+
+            border-color: var(--teal);
+
+            box-shadow:
+                inset 0 1px rgba(255, 255, 255, .08),
+                0 0 20px rgba(0, 180, 216, .12);
+        }
+
+        .hardware-top {
+            height: 105px;
+
+            display: grid;
+            place-items: center;
+
+            color: #7beeff;
+
+            font: bold 24px var(--font-code);
+
+            background:
+                radial-gradient(circle,
+                    rgba(0, 180, 216, .13),
+                    transparent 60%),
+                linear-gradient(#18262a,
+                    #0a0f11);
+
+            border-bottom: 1px solid #293a40;
+        }
+
+        .hardware-content {
+            padding: 13px;
+        }
+
+        .hardware-content h3 {
+            margin: 0;
+
+            font: bold 14px var(--font-code);
+        }
+
+        .hardware-content p {
+            min-height: 74px;
+
+            margin: 8px 0 12px;
+
+            color: #849398;
+
+            line-height: 1.5;
+        }
+
+        .spec {
+            display: grid;
+
+            grid-template-columns: 78px 1fr;
+
+            padding: 5px 0;
+
+            border-top: 1px dotted #2c393d;
+
+            font: 10px var(--font-code);
+        }
+
+        .spec b {
+            color: #65767b;
+            font-weight: normal;
+        }
+
+        .spec span {
+            color: #b5c2c5;
+        }
+
+        .built {
+            display: inline-block;
+
+            margin-top: 11px;
+
+            padding: 4px 7px;
+
+            color: var(--green);
+
+            font: bold 9px var(--font-code);
+
+            border: 1px solid rgba(87, 214, 107, .28);
+
+            background: rgba(87, 214, 107, .05);
+        }
+
+
+        /* =========================================================
+           PROBLEM SOLVING LOG
+        ========================================================= */
+
+        .problem-intro {
+            margin-bottom: 15px;
+
+            color: #849499;
+
+            line-height: 1.6;
+        }
+
+        .problem-intro .flow {
+            color: var(--teal);
+        }
+
+        .problem-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 10px;
+
+            margin-bottom: 13px;
+
+            padding: 8px 10px;
+
+            border: 1px solid #29383d;
+
+            background: #090e10;
+
+            font: 9px var(--font-code);
+        }
+
+        .cf-status {
+            color: #63757a;
+        }
+
+        .cf-status.loading {
+            color: var(--yellow);
+        }
+
+        .cf-status.success {
+            color: var(--green);
+        }
+
+        .cf-status.error {
+            color: var(--red);
+        }
+
+        .refresh-cf {
+            cursor: pointer;
+
+            padding: 5px 8px;
+
+            color: #819398;
+
+            font: bold 9px var(--font-code);
+
+            border: 1px solid #34444a;
+
+            background:
+                linear-gradient(#1a2529,
+                    #0b1012);
+        }
+
+        .refresh-cf:hover {
+            color: var(--teal);
+
+            border-color: var(--teal-dark);
+        }
+
+        .problem-log {
+            display: grid;
+
+            gap: 10px;
+        }
+
+        .problem {
+            position: relative;
+
+            display: grid;
+
+            grid-template-columns: 76px 1fr;
+
+            border: 1px solid #2b393e;
+
+            background: #0c1214;
+
+            overflow: hidden;
+        }
+
+        .problem-date {
+            position: relative;
+
+            padding: 12px 7px;
+
+            text-align: center;
+
+            color: #001014;
+
+            font: bold 10px var(--font-code);
+
+            background:
+                linear-gradient(#43d9ef,
+                    #008ba7);
+
+            border-right: 1px solid #006579;
+        }
+
+        .problem-date::after {
+            content: "";
+
+            position: absolute;
+
+            right: -7px;
+            top: 0;
+
+            border-top: 7px solid #006579;
+            border-right: 7px solid transparent;
+        }
+
+        .problem-date .day {
+            display: block;
+
+            font-size: 12px;
+
+            margin-top: 2px;
+        }
+
+        .problem-content {
+            min-width: 0;
+
+            padding: 11px 13px;
+        }
+
+        .problem-head {
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+            margin-bottom: 8px;
+        }
+
+        .problem-name {
+            color: #dbe4e6;
+
+            font: bold 11px var(--font-code);
+
+            line-height: 1.5;
+        }
+
+        .problem-name a {
+            transition: color .15s;
+        }
+
+        .problem-name a:hover {
+            color: var(--teal-bright);
+        }
+
+        .problem-platform {
+            flex-shrink: 0;
+
+            color: #617278;
+
+            font: 9px var(--font-code);
+
+            text-align: right;
+        }
+
+        .submission-history {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 5px;
+        }
+
+        .result {
+            padding: 4px 6px;
+
+            font: bold 9px var(--font-code);
+
+            border: 1px solid;
+        }
+
+        .result.wa {
+            color: var(--red);
+
+            border-color: rgba(255, 92, 98, .3);
+
+            background: rgba(255, 92, 98, .045);
+        }
+
+        .result.tle {
+            color: var(--yellow);
+
+            border-color: rgba(232, 200, 92, .3);
+
+            background: rgba(232, 200, 92, .045);
+        }
+
+        .result.ac {
+            color: var(--green);
+
+            border-color: rgba(87, 214, 107, .3);
+
+            background: rgba(87, 214, 107, .045);
+        }
+
+        .result.re {
+            color: #ff9b5c;
+
+            border-color: rgba(255, 155, 92, .3);
+
+            background: rgba(255, 155, 92, .045);
+        }
+
+        .result.ce {
+            color: var(--purple);
+
+            border-color: rgba(255, 118, 200, .3);
+
+            background: rgba(255, 118, 200, .045);
+        }
+
+        .result.mle {
+            color: #d2c45c;
+
+            border-color: rgba(210, 196, 92, .3);
+
+            background: rgba(210, 196, 92, .045);
+        }
+
+        .result.other {
+            color: #a8b8bd;
+
+            border-color: rgba(168, 184, 189, .3);
+
+            background: rgba(168, 184, 189, .045);
+        }
+
+        .lesson {
+            margin-top: 9px;
+
+            padding-top: 8px;
+
+            border-top: 1px dotted #29363b;
+
+            color: #78888d;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+        }
+
+        .lesson strong {
+            color: #aab9bd;
+        }
+
+        .problem-meta {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 7px;
+
+            margin-top: 8px;
+        }
+
+        .meta-chip {
+            padding: 3px 6px;
+
+            color: #66777c;
+
+            font: 8px var(--font-code);
+
+            border: 1px solid #27353a;
+
+            background: #091012;
+        }
+
+        .cf-empty {
+            padding: 22px 12px;
+
+            color: #64757a;
+
+            text-align: center;
+
+            font: 10px var(--font-code);
+
+            border: 1px dotted #304147;
+
+            background: #090e10;
+        }
+
+        .cf-loading {
+            padding: 25px 12px;
+
+            color: #718187;
+
+            text-align: center;
+
+            font: 10px var(--font-code);
+
+            border: 1px dotted #304147;
+
+            background:
+                repeating-linear-gradient(
+                    135deg,
+                    #090e10,
+                    #090e10 8px,
+                    #0b1113 8px,
+                    #0b1113 16px
+                );
+        }
+
+        .cf-error-box {
+            padding: 15px;
+
+            color: #8e9da2;
+
+            border: 1px solid rgba(255, 92, 98, .25);
+
+            background: rgba(255, 92, 98, .025);
+
+            font: 10px var(--font-code);
+
+            line-height: 1.6;
+        }
+
+        .cf-error-box strong {
+            color: var(--red);
+        }
+
+
+        /* =========================================================
+           EDUCATION
+        ========================================================= */
+
+        .education {
+            display: grid;
+
+            gap: 10px;
+        }
+
+        .edu-item {
+            display: grid;
+
+            grid-template-columns: 95px 1fr;
+
+            border: 1px solid #29373c;
+
+            background: #0c1113;
+        }
+
+        .edu-year {
+            display: grid;
+            place-items: center;
+
+            color: var(--teal);
+
+            font: bold 10px var(--font-code);
+
+            border-right: 1px solid #29373c;
+
+            background:
+                linear-gradient(#121d20,
+                    #080c0e);
+        }
+
+        .edu-content {
+            padding: 12px;
+        }
+
+        .edu-content h3 {
+            margin: 0;
+
+            font: bold 13px var(--font-code);
+        }
+
+        .edu-content p {
+            margin: 5px 0 0;
+
+            color: #78898e;
+        }
+
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+            margin: 18px 0 25px;
+
+            padding: 15px;
+
+            text-align: center;
+
+            color: #637378;
+
+            font: 10px var(--font-code);
+
+            border: 1px solid #222f34;
+
+            background:
+                linear-gradient(#101719,
+                    #080b0d);
+        }
+
+        .footer-badge {
+            display: inline-block;
+
+            margin-bottom: 7px;
+
+            padding: 5px 9px;
+
+            color: var(--teal);
+
+            border: 1px solid #22515b;
+
+            background: #0b1619;
+        }
+
+
+        /* =========================================================
+           SCANLINES
+        ========================================================= */
+
+        body.scanlines::before {
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 9999;
+
+            pointer-events: none;
+
+            background:
+                repeating-linear-gradient(to bottom,
+                    rgba(255, 255, 255, .025) 0,
+                    rgba(255, 255, 255, .025) 1px,
+                    transparent 1px,
+                    transparent 3px);
+
+            opacity: .28;
+        }
+
+
+        /* =========================================================
+           CRT BUTTON
+        ========================================================= */
+
+        .crt-button {
+            cursor: pointer;
+
+            padding: 4px 7px;
+
+            color: #819398;
+
+            font: 9px var(--font-code);
+
+            border: 1px solid #34444a;
+
+            background:
+                linear-gradient(#1a2529,
+                    #0b1012);
+        }
+
+        .crt-button:hover {
+            color: var(--teal);
+
+            border-color: var(--teal-dark);
+        }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 800px) {
+
+            .header-main {
+                min-height: auto;
+
+                align-items: flex-start;
+
+                padding: 16px;
+            }
+
+            .brand-logo {
+                width: 50px;
+                height: 50px;
+            }
+
+            .brand h1 {
+                font-size: 18px;
+            }
+
+            .brand p {
+                font-size: 8px;
+            }
+
+            .tabs {
+                overflow-x: auto;
+            }
+
+            .tab {
+                flex: 0 0 auto;
+
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .avatar-window {
+                max-width: 210px;
+            }
+
+            .about-grid,
+            .hardware-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hardware-content p {
+                min-height: auto;
+            }
+
+            .problem-head {
+                display: block;
+            }
+
+            .problem-platform {
+                margin-top: 4px;
+
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .site {
+                width: calc(100% - 10px);
+            }
+
+            body {
+                font-size: 12px;
+            }
+
+            .header-main {
+                gap: 10px;
+            }
+
+            .hero {
+                padding: 12px;
+            }
+
+            .hero-copy h2 {
+                font-size: 31px;
+
+                letter-spacing: -2px;
+            }
+
+            .section-body {
+                padding: 10px;
+            }
+
+            .problem {
+                grid-template-columns: 61px 1fr;
+            }
+
+            .problem-date {
+                padding-left: 4px;
+                padding-right: 4px;
+            }
+
+            .edu-item {
+                grid-template-columns: 70px 1fr;
+            }
+
+            .problem-toolbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 
+
 <body>
-  <!-- cursor follower -->
-  <div class="cursor-dot" id="cursorDot"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
 
-  <!-- ══════════════════ SIDE NAV (desktop) ══════════════════ -->
-  <nav class="sidenav" id="sidenav">
-    <div class="nav-logo">MR</div>
+    <div class="site">
 
-    <a href="#" class="nav-btn active" data-tab="home" data-tip="home" onclick="switchTab('home',this);return false;">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M3 12l9-9 9 9M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9" />
-      </svg>
-    </a>
-    <a href="#" class="nav-btn" data-tab="about" data-tip="about" onclick="switchTab('about',this);return false;">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.118a7.5 7.5 0 0115 0" />
-      </svg>
-    </a>
-    <a href="#" class="nav-btn" data-tab="skills" data-tip="skills" onclick="switchTab('skills',this);return false;">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3M3.75 21h16.5a1.5 1.5 0 001.5-1.5V5.25a1.5 1.5 0 00-1.5-1.5H3.75a1.5 1.5 0 00-1.5 1.5v14.25A1.5 1.5 0 003.75 21z" />
-      </svg>
-    </a>
-    <a href="#" class="nav-btn" data-tab="projects" data-tip="projects"
-      onclick="switchTab('projects',this);return false;">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-      </svg>
-    </a>
-    <a href="#" class="nav-btn" data-tab="codeforces" data-tip="codeforces"
-      onclick="switchTab('codeforces',this);return false;">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M3 13.5V19a1 1 0 001 1h3a1 1 0 001-1v-5.5M9 8V19a1 1 0 001 1h3a1 1 0 001-1V8M15 11v8a1 1 0 001 1h3a1 1 0 001-1v-8" />
-      </svg>
-    </a>
-    <a href="#" class="nav-btn" data-tab="education" data-tip="education"
-      onclick="switchTab('education',this);return false;">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M4.26 10.147a60.44 60.44 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.906 59.906 0 0112 3.493a59.903 59.903 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5z" />
-      </svg>
-    </a>
-    <a href="#" class="nav-btn" data-tab="mail" data-tip="mail" onclick="switchTab('mail',this);return false;">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-      </svg>
-    </a>
-  </nav>
+        <!-- =======================================================
+             TOP STATUS
+        ======================================================== -->
 
-  <!-- ══════════════════ BOTTOM NAV (mobile) ══════════════════ -->
-  <nav class="bottomnav" id="bottomnav">
-    <a class="nav-btn active" data-tab="home" onclick="switchTab('home',this);return false;" href="#">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M3 12l9-9 9 9M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9" />
-      </svg>
-      home
-    </a>
-    <a class="nav-btn" data-tab="about" onclick="switchTab('about',this);return false;" href="#">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.118a7.5 7.5 0 0115 0" />
-      </svg>
-      about
-    </a>
-    <a class="nav-btn" data-tab="skills" onclick="switchTab('skills',this);return false;" href="#">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3M3.75 21h16.5a1.5 1.5 0 001.5-1.5V5.25a1.5 1.5 0 00-1.5-1.5H3.75a1.5 1.5 0 00-1.5 1.5v14.25A1.5 1.5 0 003.75 21z" />
-      </svg>
-      skills
-    </a>
-    <a class="nav-btn" data-tab="projects" onclick="switchTab('projects',this);return false;" href="#">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-      </svg>
-      proj
-    </a>
-    <a class="nav-btn" data-tab="codeforces" onclick="switchTab('codeforces',this);return false;" href="#">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M3 13.5V19a1 1 0 001 1h3a1 1 0 001-1v-5.5M9 8V19a1 1 0 001 1h3a1 1 0 001-1V8M15 11v8a1 1 0 001 1h3a1 1 0 001-1v-8" />
-      </svg>
-      cf
-    </a>
-    <a class="nav-btn" data-tab="education" onclick="switchTab('education',this);return false;" href="#">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M4.26 10.147a60.44 60.44 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.906 59.906 0 0112 3.493a59.903 59.903 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342" />
-      </svg>
-      edu
-    </a>
-    <a class="nav-btn" data-tab="mail" onclick="switchTab('mail',this);return false;" href="#">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-      </svg>
-      mail
-    </a>
-  </nav>
+        <div class="status-strip">
 
-  <!-- ══════════════════ MAIN ══════════════════ -->
-  <div class="shell">
-    <div><!-- spacer for side nav --></div>
-    <main>
+            <span>
+                RIFAT.EXE // PERSONAL HOMEPAGE
+            </span>
 
-      <!-- ═══ OUTER CARD ═══ -->
-      <div class="outer-card">
+            <span class="online">
+                SYSTEM ONLINE
+            </span>
 
-        <!-- ──── HOME ──── -->
-        <div class="section active" id="tab-home">
-          <div class="home-inner">
-            <div class="home-top">
-              <div>
-                <div class="home-meta">
-                  <span class="dot-live"></span>
-                  BSc CSE Student · Embedded Systems Enthusiast
-                </div>
-                <h1>Muhammad<br /><em>Rifat</em></h1>
-                <p class="home-desc">
-                  Passionate about <strong>IoT</strong> &amp; <strong>Embedded Systems</strong> — building things that
-                  interact with the physical world.<br />
-                  I solve algorithmic problems on <strong>Codeforces</strong> using C.<br />
-                  Skilled in C, Python, JavaScript and TypeScript.
-                </p>
-                <div class="home-badges">
-                  <span class="badge accent" id="homeCfBadge">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M3 13.5V19a1 1 0 001 1h3a1 1 0 001-1v-5.5M9 8V19a1 1 0 001 1h3a1 1 0 001-1V8M15 11v8a1 1 0 001 1h3a1 1 0 001-1v-8" />
-                    </svg>
-                    <span id="homeCfText">CF Rating … · Loading</span>
-                  </span>
-                  <span class="badge"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                      style="display:inline;vertical-align:middle;margin-right:4px">
-                      <path d="M12 22v-5" />
-                      <path d="M9 8V2" />
-                      <path d="M15 8V2" />
-                      <path d="M18 8H6a1 1 0 0 0-1 1v3a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V9a1 1 0 0 0-1-1z" />
-                    </svg>IoT &amp; Embedded</span>
-                  <span class="badge"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                      style="display:inline;vertical-align:middle;margin-right:4px">
-                      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z" />
-                      <circle cx="12" cy="10" r="3" />
-                    </svg>Bangladesh</span>
-                </div>
-                <div class="home-cta">
-                  <a href="https://github.com/RifatParadoxical" target="_blank" class="btn btn-solid">
-                    <svg fill="currentColor" viewBox="0 0 24 24">
-                      <path
-                        d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-                    </svg>
-                    <span>GitHub</span>
-                  </a>
-                  <a href="mailto:muhammadrifat67@gmail.com" class="btn btn-outline">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-                    </svg>
-                    <span>Contact</span>
-                  </a>
-                  <a href="./muhammad_rifat.pdf" download class="btn btn-outline">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                    </svg>
-                    <span>Resume</span>
-                  </a>
-                </div>
-              </div>
-
-              <!-- avatar -->
-              <div class="avatar-box">
-                <img src="./profile.jpeg" alt="Rifat"
-                  style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-              </div>
-            </div>
-          </div>
-
-          <!-- social media addresses (bottom of home) -->
-          <div class="home-social">
-            <div class="social-label">social media addresses</div>
-            <div class="social-grid">
-              <a href="https://facebook.com/rifat.jr.dev" target="_blank" class="social-pill">
-                <svg fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                </svg>
-                Facebook
-              </a>
-              <a href="https://reddit.com/user/Obvious_Carry_7660" target="_blank" class="social-pill">
-                <svg fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .338-.272l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z" />
-                </svg>
-                Reddit
-              </a>
-              <a href="https://chabondhu.com/rifatparadoxical" target="_blank" class="social-pill">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M17 8h1a4 4 0 0 1 0 8h-1" />
-                  <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4z" />
-                  <line x1="6" y1="2" x2="6" y2="4" />
-                  <line x1="10" y1="2" x2="10" y2="4" />
-                  <line x1="14" y1="2" x2="14" y2="4" />
-                </svg>
-                ChaBondhu
-              </a>
-              <a href="https://linkedin.com/in/md-rifat-dev" target="_blank" class="social-pill">
-                <svg fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                </svg>
-                LinkedIn
-              </a>
-              <a href="https://www.instagram.com/rifat.jr.dev" target="_blank" class="social-pill">
-                <svg fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
-                </svg>
-                Instagram
-              </a>
-              <a href="https://www.youtube.com/@BanglayCoding" target="_blank" class="social-pill">
-                <svg fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-                </svg>
-                YouTube
-              </a>
-              <a href="https://codeforces.com/profile/muhammad_rifat" target="_blank" class="social-pill">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M3 13.5V19a1 1 0 001 1h3a1 1 0 001-1v-5.5M9 8V19a1 1 0 001 1h3a1 1 0 001-1V8M15 11v8a1 1 0 001 1h3a1 1 0 001-1v-8" />
-                </svg>
-                Codeforces
-              </a>
-              <a href="https://github.com/RifatParadoxical" target="_blank" class="social-pill">
-                <svg fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-                </svg>
-                GitHub
-              </a>
-            </div>
-          </div>
         </div>
 
-        <!-- ──── ABOUT ──── -->
-        <div class="section" id="tab-about">
-          <div class="about-inner">
-            <div class="sec-eyebrow">About</div>
-            <h2>Who I am</h2>
 
-            <div style="display:flex;flex-direction:column;gap:12px;margin-top:24px;">
-              <div class="skill-item reveal">
-                <div class="skill-emoji">
-                  <!-- Puzzle / Problem Solver icon -->
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path
-                      d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.093.706 1.714s-.235 1.243-.706 1.714l-1.61 1.61a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61C13.243 21.765 12.62 22 12 22s-1.243-.235-1.714-.706l-1.568-1.568a.98.98 0 0 0-.878-.289c-.493.074-.85.498-1.002.986a2.501 2.501 0 1 1-3.214-3.214c.488-.152.912-.51.986-1.002a.98.98 0 0 0-.289-.878l-1.568-1.568C2.235 13.243 2 12.62 2 12s.235-1.243.706-1.714l1.61-1.61a.98.98 0 0 1 .837-.276c.47.07.802.48.968.925a2.501 2.501 0 1 0 3.214-3.214c-.446-.166-.855-.497-.925-.968a.979.979 0 0 1 .276-.837l1.61-1.61C10.757 2.235 11.38 2 12 2s1.243.235 1.714.706l1.568 1.568c.23.23.556.338.878.289.493-.074.85-.498 1.002-.986a2.501 2.501 0 1 1 3.214 3.214c-.488.152-.912.51-.986 1.002z" />
-                  </svg>
-                </div>
-                <div class="skill-name-text">Problem Solver</div>
-                <p style="font-size:13px;color:var(--muted);margin-top:4px;line-height:1.6;">
-                  I solve algorithmic problems on <strong style="color:var(--text)">Codeforces</strong> using C. Every
-                  problem is a logic puzzle — and that problem-solving mindset extends into everything I build.
-                </p>
-              </div>
-              <div class="skill-item reveal d1">
-                <div class="skill-emoji">
-                  <!-- IoT / Plug icon -->
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path d="M12 22v-5" />
-                    <path d="M9 8V2" />
-                    <path d="M15 8V2" />
-                    <path d="M18 8H6a1 1 0 0 0-1 1v3a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V9a1 1 0 0 0-1-1z" />
-                  </svg>
-                </div>
-                <div class="skill-name-text">IoT & Embedded Systems</div>
-                <p style="font-size:13px;color:var(--muted);margin-top:4px;line-height:1.6;">
-                  My passion is building things that interact with the physical world. Especially <strong
-                    style="color:var(--text)">microcontrollers, sensors, smart home systems</strong>. Software that can
-                  be touched.
-                </p>
-              </div>
-              <div class="skill-item reveal d2">
-                <div class="skill-emoji">
-                  <!-- Book / Learner icon -->
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-                  </svg>
-                </div>
-                <div class="skill-name-text">Student & Learner</div>
-                <p style="font-size:13px;color:var(--muted);margin-top:4px;line-height:1.6;">
-                  Currently pursuing <strong style="color:var(--text)">BSc in Computer Science & Engineering</strong>.
-                  I've learned C, Python, JavaScript, and TypeScript — each one shaping how I think about code.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <!-- =======================================================
+             HEADER
+        ======================================================== -->
 
-        <!-- ──── SKILLS (MCU CIRCUIT BOARD DESIGN) ──── -->
-        <div class="section" id="tab-skills">
-          <div class="skills-inner">
-            <div class="sec-eyebrow">Skills</div>
-            <h2>What I work with</h2>
+        <header>
 
-            <!-- MCU Chip Header -->
-            <div class="mcu-chip-container">
-              <div class="mcu-chip">
-                <div class="mcu-pins left">
-                  <div class="mcu-pin"></div>
-                  <div class="mcu-pin"></div>
-                  <div class="mcu-pin"></div>
-                  <div class="mcu-pin"></div>
+            <div class="header-main">
+
+                <div class="brand">
+
+                    <div class="brand-logo">
+                        MR
+                    </div>
+
+                    <div>
+                        <h1>
+                            MUHAMMAD RIFAT
+                        </h1>
+
+                        <p>
+                            CSE STUDENT // EMBEDDED SYSTEMS // PROBLEM SOLVER
+                        </p>
+                    </div>
+
                 </div>
-                <div class="mcu-chip-body">Languages &amp; Tools</div>
-                <div class="mcu-pins right">
-                  <div class="mcu-pin"></div>
-                  <div class="mcu-pin"></div>
-                  <div class="mcu-pin"></div>
-                  <div class="mcu-pin"></div>
-                </div>
-              </div>
-            </div>
 
-            <!-- Circuit Traces SVG -->
-            <div class="circuit-traces">
-              <svg viewBox="0 0 800 70" preserveAspectRatio="none">
-                <!-- Main vertical from chip -->
-                <line class="trace-line" x1="400" y1="0" x2="400" y2="25" />
-                <!-- Horizontal bus -->
-                <line class="trace-line" x1="100" y1="25" x2="700" y2="25" />
-                <!-- Drops to each card column -->
-                <line class="trace-line" x1="100" y1="25" x2="100" y2="70" />
-                <line class="trace-line" x1="250" y1="25" x2="250" y2="70" />
-                <line class="trace-line" x1="400" y1="25" x2="400" y2="70" />
-                <line class="trace-line" x1="550" y1="25" x2="550" y2="70" />
-                <line class="trace-line" x1="700" y1="25" x2="700" y2="70" />
-                <!-- Junction dots -->
-                <circle class="trace-dot" cx="100" cy="25" r="3" />
-                <circle class="trace-dot" cx="250" cy="25" r="3" />
-                <circle class="trace-dot" cx="400" cy="25" r="3" />
-                <circle class="trace-dot" cx="550" cy="25" r="3" />
-                <circle class="trace-dot" cx="700" cy="25" r="3" />
-                <!-- Glow traces -->
-                <line class="trace-glow" x1="400" y1="0" x2="400" y2="25" stroke-dasharray="8 4" />
-                <line class="trace-glow" x1="100" y1="25" x2="700" y2="25" stroke-dasharray="12 6" />
-                <line class="trace-glow" x1="100" y1="25" x2="100" y2="70" stroke-dasharray="8 4" />
-                <line class="trace-glow" x1="400" y1="25" x2="400" y2="70" stroke-dasharray="8 4" />
-                <line class="trace-glow" x1="700" y1="25" x2="700" y2="70" stroke-dasharray="8 4" />
-              </svg>
-            </div>
-
-            <!-- Skills Cards Grid -->
-            <div class="skills-grid">
-
-              <!-- C -->
-              <div class="skill-item reveal">
-                <div class="skill-icon-wrap">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path d="M17.5 8.5A6 6 0 1 0 17.5 15.5" />
-                  </svg>
-                </div>
-                <div class="skill-name-text">C</div>
-                <div class="skill-desc">My primary language for algorithmic problem solving on Codeforces and low-level
-                  embedded systems programming.</div>
-              </div>
-
-              <!-- Python -->
-              <div class="skill-item reveal d1">
-                <div class="skill-icon-wrap">
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                      d="M11.914 0C5.82 0 6.2 2.656 6.2 2.656l.007 2.752h5.814v.826H3.9S0 5.789 0 11.969c0 6.18 3.403 5.96 3.403 5.96h2.031v-2.867s-.109-3.402 3.35-3.402h5.769s3.24.052 3.24-3.13V3.19S18.28 0 11.914 0zm-3.21 1.839a1.047 1.047 0 1 1 0 2.094 1.047 1.047 0 0 1 0-2.094z" />
-                    <path
-                      d="M12.086 24c6.094 0 5.714-2.656 5.714-2.656l-.007-2.752h-5.814v-.826h8.121S24 18.211 24 12.031c0-6.18-3.403-5.96-3.403-5.96h-2.031v2.867s.109 3.402-3.35 3.402H9.447s-3.24-.052-3.24 3.13V20.81S5.72 24 12.086 24zm3.21-1.839a1.047 1.047 0 1 1 0-2.094 1.047 1.047 0 0 1 0 2.094z" />
-                  </svg>
-                </div>
-                <div class="skill-name-text">Python</div>
-                <div class="skill-desc">Used for scripting, automation, and rapid prototyping. A versatile tool in my
-                  development toolkit.</div>
-              </div>
-
-              <!-- JavaScript -->
-              <div class="skill-item reveal d2">
-                <div class="skill-icon-wrap">
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                      d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z" />
-                  </svg>
-                </div>
-                <div class="skill-name-text">JavaScript</div>
-                <div class="skill-desc">Building interactive web experiences with DOM manipulation, async patterns, and
-                  modern ES6+ features.</div>
-              </div>
-
-              <!-- TypeScript -->
-              <div class="skill-item reveal d3">
-                <div class="skill-icon-wrap">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="2" />
-                    <path d="M7 14h3M8.5 14v4" />
-                    <path d="M13 18h2.5a1.5 1.5 0 0 0 0-3h-1a1.5 1.5 0 0 1 0-3H17" />
-                  </svg>
-                </div>
-                <div class="skill-name-text">TypeScript</div>
-                <div class="skill-desc">A strict syntactical superset of JavaScript, adding optional static typing
-                  designed for large applications.</div>
-              </div>
-
-              <!-- IoT / Embedded -->
-              <div class="skill-item reveal">
-                <div class="skill-icon-wrap">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path d="M12 22v-5" />
-                    <path d="M9 8V2" />
-                    <path d="M15 8V2" />
-                    <path d="M18 8H6a1 1 0 0 0-1 1v3a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V9a1 1 0 0 0-1-1z" />
-                  </svg>
-                </div>
-                <div class="skill-name-text">IoT / Embedded</div>
-                <div class="skill-desc">Hands-on experience with microcontrollers, sensors, and building smart connected
-                  devices from scratch.</div>
-              </div>
-
-              <!-- Algorithms -->
-              <div class="skill-item reveal d1">
-                <div class="skill-icon-wrap">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <rect x="7" y="7" width="10" height="10" rx="1" />
-                    <path d="M9 7V4" />
-                    <path d="M12 7V4" />
-                    <path d="M15 7V4" />
-                    <path d="M9 20v-3" />
-                    <path d="M12 20v-3" />
-                    <path d="M15 20v-3" />
-                    <path d="M4 9h3" />
-                    <path d="M4 12h3" />
-                    <path d="M4 15h3" />
-                    <path d="M17 9h3" />
-                    <path d="M17 12h3" />
-                    <path d="M17 15h3" />
-                  </svg>
-                </div>
-                <div class="skill-name-text">Algorithms</div>
-                <div class="skill-desc">Data structures, competitive programming on Codeforces, and algorithmic problem
-                  solving with C.</div>
-              </div>
-
-              <!-- Web Dev -->
-              <div class="skill-item reveal d2">
-                <div class="skill-icon-wrap">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M2 12h20" />
-                    <path
-                      d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                  </svg>
-                </div>
-                <div class="skill-name-text">Web Dev</div>
-                <div class="skill-desc">Building responsive websites with HTML, CSS, and JavaScript — from static pages
-                  to interactive apps.</div>
-              </div>
-
-              <!-- Git & GitHub -->
-              <div class="skill-item reveal d3">
-                <div class="skill-icon-wrap">
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                      d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-                  </svg>
-                </div>
-                <div class="skill-name-text">Git &amp; GitHub</div>
-                <div class="skill-desc">Version control workflow, collaborative development, and open source project
-                  management.</div>
-              </div>
+                <button class="crt-button" id="crtToggle" type="button">
+                    CRT: OFF
+                </button>
 
             </div>
-          </div>
-        </div>
 
-        <!-- ──── CODEFORCES ──── -->
-        <div class="section" id="tab-codeforces">
-          <div class="cf-inner">
-            <div class="sec-eyebrow">Competitive</div>
-            <h2>Codeforces Profile</h2>
-            <div class="cf-layout">
-              <div class="cf-stats-card">
-                <div class="cf-stats-head">
-                  <div class="cf-handle">muhammad_rifat</div>
-                  <div class="cf-rank-badge">NEWBIE</div>
-                </div>
-                <div class="cf-row">
-                  <span class="cf-row-label">Rating</span>
-                  <span class="cf-row-val">381</span>
-                </div>
-                <div class="cf-row">
-                  <span class="cf-row-label">Rank</span>
-                  <span class="cf-row-val">Newbie</span>
-                </div>
-                <div class="cf-row">
-                  <span class="cf-row-label">Language</span>
-                  <span class="cf-row-val">C</span>
-                </div>
-                <div class="cf-row">
-                  <span class="cf-row-label">Profile</span>
-                  <span class="cf-row-val">
-                    <a href="https://codeforces.com/profile/muhammad_rifat" target="_blank"
-                      style="color:var(--accent);text-decoration:none;font-size:11px;">
-                      Open ↗
-                    </a>
-                  </span>
-                </div>
-              </div>
-              <div class="cf-panel" id="cfPanel">
-                <div class="cf-panel-bar">
-                  <span><i class="dot-r"></i><i class="dot-y"></i><i class="dot-g"></i></span>
-                  <span class="cf-panel-url">codeforces.com/muhammad_rifat</span>
-                  <span class="cf-panel-live"></span>
-                </div>
-                <div class="cf-panel-body" id="cfPanelBody">
-                  <div class="cf-loading" id="cfLoading">
-                    <div class="cf-spinner"></div>
-                    <span>Fetching live data…</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div><!-- /tab-codeforces -->
 
-        <!-- ──── PROJECTS ──── -->
-        <div class="section" id="tab-projects">
-          <div class="skills-inner">
-            <div class="sec-eyebrow">Projects</div>
-            <h2>GitHub Repositories</h2>
-            <div id="projectsGrid"
-              style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-top:24px;">
-              <div class="cf-loading" id="projectsLoading">
-                <div class="cf-spinner"></div>
-                <span>Loading projects…</span>
-              </div>
-            </div>
-          </div>
-        </div>
+            <nav class="tabs">
 
-        <!-- ──── EDUCATION ──── -->
-        <div class="section" id="tab-education">
-          <div class="edu-inner">
-            <div class="sec-eyebrow">Education</div>
-            <h2>Academic journey</h2>
-            <div class="edu-list">
-              <div class="edu-card reveal">
-                <div>
-                  <div class="edu-deg">BSc in Computer Science & Engineering</div>
-                  <div class="edu-school-name">Sheikh Borhanuddin University and College</div>
-                  <div class="edu-detail-text">Studying algorithms, systems, networks and building things that matter.
-                  </div>
-                </div>
-                <span class="pill-active">Running</span>
-              </div>
-              <div class="edu-card reveal d1">
-                <div>
-                  <div class="edu-deg">HSC — Science</div>
-                  <div class="edu-school-name">Dr. Mahbubur Rahman Mollah College</div>
-                  <div class="edu-detail-text">GPA <strong style="color:var(--text)">4.50</strong> · Science group ·
-                    Higher Secondary Certificate</div>
-                </div>
-                <span class="pill-done">Passed</span>
-              </div>
-            </div>
-          </div>
-        </div>
+                <a class="tab active" href="#home">
+                    HOME
+                </a>
 
-        <!-- ──── MAIL ──── -->
-        <div class="section" id="tab-mail">
-          <div class="mail-inner">
+                <a class="tab" href="#about">
+                    ABOUT
+                </a>
+
+                <a class="tab" href="#embedded">
+                    EMBEDDED LAB
+                </a>
+
+                <a class="tab" href="#problems">
+                    PROBLEM LOG
+                </a>
+
+                <a class="tab" href="#education">
+                    EDUCATION
+                </a>
+
+                <a class="tab" href="#contact">
+                    CONTACT
+                </a>
+
+            </nav>
+
+        </header>
+
+
+        <!-- =======================================================
+             HERO
+        ======================================================== -->
+
+        <section id="home" class="hero">
+
             <div>
-              <div class="sec-eyebrow">Contact</div>
-              <div class="mail-big">
-                Let's build something<br /><em>together.</em>
-              </div>
+
+                <div class="avatar-window">
+
+                    <img src="./profile.jpeg" alt="Muhammad Rifat" />
+
+                    <div class="avatar-caption">
+                        profile.jpeg // loaded
+                    </div>
+
+                </div>
+
             </div>
-            <a href="mailto:muhammadrifat67@gmail.com" class="mail-card reveal">
-              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-              </svg>
-              <div>
-                <div style="font-size:10px;font-family:var(--mono);color:var(--faint);margin-bottom:2px;">email</div>
-                <div class="mail-addr-text">muhammadrifat67@gmail.com</div>
-              </div>
-            </a>
-            <div class="home-cta reveal d1">
-              <a href="https://github.com/RifatParadoxical" target="_blank" class="btn btn-solid">
-                <svg fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-                </svg>
-                GitHub
-              </a>
-              <a href="./muhammad_rifat.pdf" download class="btn btn-outline">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                </svg>
-                Download Resume
-              </a>
+
+
+            <div class="hero-copy">
+
+                <div class="small-title">
+                    // welcome to my little corner of the internet
+                </div>
+
+                <h2>
+                    I BUILD THINGS
+                    <br>
+                    THAT <span>DO SOMETHING.</span>
+                </h2>
+
+                <p class="intro">
+                    I'm Muhammad Rifat, a Computer Science & Engineering
+                    student interested in embedded systems, IoT and
+                    algorithmic problem solving.
+                    I like writing code, connecting sensors,
+                    experimenting with microcontrollers and figuring out
+                    why something doesn't work until it finally does.
+                </p>
+
+
+                <div class="hero-tags">
+
+                    <span class="tag">
+                        C
+                    </span>
+
+                    <span class="tag">
+                        Arduino
+                    </span>
+
+                    <span class="tag">
+                        ESP32
+                    </span>
+
+                    <span class="tag">
+                        IoT
+                    </span>
+
+                    <span class="tag">
+                        Sensors
+                    </span>
+
+                    <span class="tag">
+                        Python
+                    </span>
+
+                    <span class="tag">
+                        JavaScript
+                    </span>
+
+                </div>
+
+
+                <!-- CV DOWNLOAD -->
+
+                <a
+                    class="cv-button"
+                    href="./muhammad_rifat.pdf"
+                    download="Muhammad_Rifat_CV.pdf"
+                    target="_blank"
+                    rel="noopener">
+
+                    ↓ DOWNLOAD CV
+
+                </a>
+
             </div>
-            <div style="border-top:1px solid var(--border);padding-top:24px;" class="reveal d2">
-              <div class="social-label">Find me on</div>
-              <div class="social-grid">
-                <a href="https://facebook.com/rifat.jr.dev" target="_blank" class="social-pill">Facebook</a>
-                <a href="https://reddit.com/user/Obvious_Carry_7660" target="_blank" class="social-pill">Reddit</a>
-                <a href="https://linkedin.com/in/md-rifat-dev" target="_blank" class="social-pill">LinkedIn</a>
-                <a href="https://instagram.com/rifat.jr.dev" target="_blank" class="social-pill">Instagram</a>
-                <a href="https://www.youtube.com/@BanglayCoding" target="_blank" class="social-pill">YouTube</a>
-                <a href="https://codeforces.com/profile/muhammad_rifat" target="_blank"
-                  class="social-pill">Codeforces</a>
-                <a href="https://github.com/RifatParadoxical" target="_blank" class="social-pill">GitHub</a>
-                <a href="https://chabondhu.com/rifatparadoxical" target="_blank" class="social-pill">ChaBondhu</a>
-              </div>
+
+        </section>
+
+
+        <!-- =======================================================
+             ABOUT
+        ======================================================== -->
+
+        <section id="about" class="section">
+
+            <div class="section-title">
+
+                <h2>
+                    About Me
+                </h2>
+
+                <span>
+                    ABOUT.TXT
+                </span>
+
             </div>
-          </div>
-        </div>
 
-      </div><!-- /outer-card -->
 
-      <!-- small footer -->
-      <p
-        style="font-family:var(--mono);font-size:10px;color:var(--faint);text-align:center;letter-spacing:0.06em;padding-bottom:8px;">
-        ©
-        <script>document.write(new Date().getFullYear())</script> Muhammad Rifat
-      </p>
+            <div class="section-body">
 
-    </main>
-  </div>
+                <div class="about-grid">
 
-  <script>
-    /* ── TAB SWITCHING ── */
-    function switchTab(id, el) {
-      // hide all sections
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-      // show target
-      const target = document.getElementById('tab-' + id);
-      if (target) {
-        target.classList.add('active');
-        // trigger reveals
-        setTimeout(() => {
-          target.querySelectorAll('.reveal').forEach(r => r.classList.add('vis'));
-        }, 30);
-      }
-      // update all nav buttons in both navs
-      document.querySelectorAll('.nav-btn').forEach(b => {
-        b.classList.toggle('active', b.dataset.tab === id);
-      });
-    }
+                    <article class="mini-panel">
 
-    /* ── INIT REVEALS on home ── */
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('#tab-home .reveal').forEach(r => {
-        setTimeout(() => r.classList.add('vis'), 80);
-      });
-    });
+                        <h3>
+                            PROBLEM SOLVER
+                        </h3>
 
-    /* ── SMOOTH transition on section switch ── */
-    const style = document.createElement('style');
-    style.textContent = `.section { animation: none; } .section.active { animation: fadeIn 0.25s ease; } @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }`;
-    document.head.appendChild(style);
+                        <p>
+                            I solve algorithmic problems on Codeforces
+                            using C. Sometimes the solution works immediately.
+                            Sometimes it absolutely does not.
+                            Either way, I learn something from it.
+                        </p>
 
-    /* ── CODEFORCES LIVE API ── */
-    (function () {
-      const HANDLE = 'muhammad_rifat';
-      const body = document.getElementById('cfPanelBody');
-      if (!body) return;
+                    </article>
 
-      async function cfFetch(method, params) {
-        const url = `https://codeforces.com/api/${method}?${new URLSearchParams(params)}`;
-        const r = await fetch(url, { cache: 'no-cache' });
-        const j = await r.json();
-        if (j.status !== 'OK') throw new Error(j.comment || 'CF API error');
-        return j.result;
-      }
 
-      function buildSparkline(ratings) {
-        if (!ratings.length) return '';
-        const vals = ratings.map(r => r.newRating);
-        const W = 600, H = 100, pad = 6;
-        const minV = Math.min(...vals), maxV = Math.max(...vals);
-        const range = maxV - minV || 1;
-        const pts = vals.map((v, i) => [
-          pad + (i / (vals.length - 1 || 1)) * (W - 2 * pad),
-          H - pad - ((v - minV) / range) * (H - 2 * pad)
-        ]);
-        const poly = pts.map(p => p.join(',')).join(' ');
-        const area = `${pts[0][0]},${H} ` + poly + ` ${pts[pts.length - 1][0]},${H}`;
-        const lx = pts[pts.length - 1][0];
-        const ly = pts[pts.length - 1][1];
-        const last = vals[vals.length - 1];
-        return `<div class="cf-chart-wrap">
-          <div class="cf-chart-title">Rating history &mdash; ${vals.length} contest${vals.length !== 1 ? 's' : ''}</div>
-          <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" height="90">
-            <defs>
-              <linearGradient id="cfGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%"   stop-color="var(--accent)" stop-opacity="0.3"/>
-                <stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/>
-              </linearGradient>
-            </defs>
-            <polygon points="${area}" fill="url(#cfGrad)"/>
-            <polyline points="${poly}" fill="none" stroke="var(--accent)" stroke-width="2"
-              stroke-linejoin="round" stroke-linecap="round"/>
-            <circle cx="${lx}" cy="${ly}" r="3.5" fill="var(--accent)"/>
-            <text x="${Math.min(lx + 6, W - 36)}" y="${ly + 1}" font-size="9" fill="var(--accent)"
-              font-family="monospace" dominant-baseline="middle">${last}</text>
-          </svg>
-        </div>`;
-      }
+                    <article class="mini-panel">
 
-      function verdictClass(v) {
-        if (v === 'OK') return 'ok';
-        if (v === 'WRONG_ANSWER') return 'wa';
-        if (v === 'TIME_LIMIT_EXCEEDED') return 'tle';
-        return 'other';
-      }
-      function verdictLabel(v) {
-        const m = {
-          OK: 'AC', WRONG_ANSWER: 'WA', TIME_LIMIT_EXCEEDED: 'TLE',
-          MEMORY_LIMIT_EXCEEDED: 'MLE', RUNTIME_ERROR: 'RTE', COMPILATION_ERROR: 'CE'
-        };
-        return m[v] || v.slice(0, 4);
-      }
+                        <h3>
+                            EMBEDDED ENTHUSIAST
+                        </h3>
 
-      function buildSubs(subs) {
-        const rows = subs.slice(0, 8).map(s => {
-          const p = s.problem;
-          const name = `${p.contestId || '?'}${p.index} — ${p.name}`;
-          const vc = verdictClass(s.verdict);
-          const vl = verdictLabel(s.verdict);
-          return `<div class="cf-sub-row">
-            <span class="cf-sub-name" title="${p.name}">${name}</span>
-            <span class="cf-verdict ${vc}">${vl}</span>
-          </div>`;
-        }).join('');
-        return `<div class="cf-subs-wrap">
-          <div class="cf-subs-title">Recent submissions</div>${rows}</div>`;
-      }
+                        <p>
+                            I'm interested in microcontrollers, sensors,
+                            communication protocols, smart-home systems
+                            and making software interact with the physical world.
+                        </p>
 
-      async function load() {
-        try {
-          const [infos, ratingHist, subs] = await Promise.all([
-            cfFetch('user.info', { handles: HANDLE }),
-            cfFetch('user.rating', { handle: HANDLE }),
-            cfFetch('user.status', { handle: HANDLE, from: 1, count: 20 }),
-          ]);
-          const u = infos[0];
+                    </article>
 
-          const acSet = new Set();
-          subs.forEach(s => { if (s.verdict === 'OK') acSet.add(`${s.problem.contestId}-${s.problem.index}`); });
 
-          const strip = `<div class="cf-stat-strip">
-            <div class="cf-stat-box">
-              <div class="cf-stat-label">Rating</div>
-              <div class="cf-stat-val accent">${u.rating ?? '—'}</div>
+                    <article class="mini-panel">
+
+                        <h3>
+                            CURRENTLY LEARNING
+                        </h3>
+
+                        <p>
+                            I'm pursuing a BSc in Computer Science &
+                            Engineering while experimenting with C,
+                            Arduino, ESP32, IoT and modern web technologies.
+                        </p>
+
+                    </article>
+
+                </div>
+
             </div>
-            <div class="cf-stat-box">
-              <div class="cf-stat-label">Max rating</div>
-              <div class="cf-stat-val">${u.maxRating ?? '—'}</div>
+
+        </section>
+
+
+        <!-- =======================================================
+             EMBEDDED LAB
+        ======================================================== -->
+
+        <section id="embedded" class="section">
+
+            <div class="section-title">
+
+                <h2>
+                    Embedded Lab
+                </h2>
+
+                <span>
+                    HARDWARE.BIN
+                </span>
+
             </div>
-            <div class="cf-stat-box">
-              <div class="cf-stat-label">Contests</div>
-              <div class="cf-stat-val">${ratingHist.length}</div>
+
+
+            <div class="section-body">
+
+                <div class="hardware-grid">
+
+
+                    <article class="hardware-card">
+
+                        <div class="hardware-top">
+                            ESP32
+                        </div>
+
+                        <div class="hardware-content">
+
+                            <h3>
+                                Home Electricity Track
+                            </h3>
+
+                            <p>
+                                An ESP32-based home electricity tracker
+                                designed to monitor electricity status remotely.
+                                Uses Blynk for real-time status updates and
+                                Telegram for instant notifications when
+                                electricity returns.
+                            </p>
+
+                            <div class="spec">
+                                <b>MCU</b>
+                                <span>ESP32</span>
+                            </div>
+
+                            <div class="spec">
+                                <b>PLATFORM</b>
+                                <span>Blynk</span>
+                            </div>
+
+                            <div class="spec">
+                                <b>ALERTS</b>
+                                <span>Telegram</span>
+                            </div>
+
+                            <span class="built">
+                                ● BUILT
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="hardware-card">
+
+                        <div class="hardware-top">
+                            WEATHER
+                        </div>
+
+                        <div class="hardware-content">
+
+                            <h3>
+                                ESP32 Weather Station
+                            </h3>
+
+                            <p>
+                                An open-source weather station using ESP32.
+                                Fetches real-time weather information from
+                                OpenWeatherMap and displays it through
+                                the Blynk IoT platform.
+                            </p>
+
+                            <div class="spec">
+                                <b>MCU</b>
+                                <span>ESP32</span>
+                            </div>
+
+                            <div class="spec">
+                                <b>API</b>
+                                <span>OpenWeatherMap</span>
+                            </div>
+
+                            <div class="spec">
+                                <b>IOT</b>
+                                <span>Blynk</span>
+                            </div>
+
+                            <span class="built">
+                                ● BUILT
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="hardware-card">
+
+                        <div class="hardware-top">
+                            HC-SR04
+                        </div>
+
+                        <div class="hardware-content">
+
+                            <h3>
+                                Ultrasonic Distance Meter
+                            </h3>
+
+                            <p>
+                                Arduino-based distance meter using an
+                                HC-SR04 ultrasonic sensor and I2C LCD.
+                                Includes a dynamic buzzer alarm that
+                                beeps faster as objects get closer.
+                            </p>
+
+                            <div class="spec">
+                                <b>MCU</b>
+                                <span>Arduino</span>
+                            </div>
+
+                            <div class="spec">
+                                <b>SENSOR</b>
+                                <span>HC-SR04</span>
+                            </div>
+
+                            <div class="spec">
+                                <b>DISPLAY</b>
+                                <span>I2C LCD</span>
+                            </div>
+
+                            <span class="built">
+                                ● BUILT
+                            </span>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <div style="
+                    margin-top:14px;
+                    padding:10px;
+                    border:1px dotted #304147;
+                    color:#708187;
+                    font:10px var(--font-code);
+                ">
+
+                    <span style="color:#00b4d8;">
+                        NOTE:
+                    </span>
+
+                    These are the projects I want this portfolio to
+                    emphasize: hardware, embedded programming,
+                    sensors, communication and IoT.
+
+                </div>
+
             </div>
-          </div>`;
 
-          body.innerHTML = strip + buildSparkline(ratingHist) + buildSubs(subs);
+        </section>
 
-          // update codeforces tab static card
-          const rows = document.querySelectorAll('#tab-codeforces .cf-row-val');
-          if (rows[0] && u.rating) rows[0].textContent = u.rating;
-          if (rows[1] && u.rank) rows[1].textContent = u.rank.charAt(0).toUpperCase() + u.rank.slice(1);
-          const badge = document.querySelector('#tab-codeforces .cf-rank-badge');
-          if (badge && u.rank) badge.textContent = u.rank.toUpperCase();
 
-          // ★ UPDATE HOMEPAGE CF BADGE DYNAMICALLY
-          const homeCfText = document.getElementById('homeCfText');
-          if (homeCfText && u.rating) {
-            const rankName = u.rank ? u.rank.charAt(0).toUpperCase() + u.rank.slice(1) : 'Newbie';
-            homeCfText.textContent = `CF Rating ${u.rating} · ${rankName}`;
-          }
+        <!-- =======================================================
+             PROBLEM SOLVING LOG
+        ======================================================== -->
 
-        } catch (e) {
-          body.innerHTML = `<div class="cf-loading">
-            <span style="color:var(--faint);font-family:var(--mono);font-size:12px;">
-              Could not load live data — ${e.message}
-            </span></div>`;
-          // fallback for homepage badge
-          const homeCfText = document.getElementById('homeCfText');
-          if (homeCfText) homeCfText.textContent = 'CF Rating — · Offline';
-        }
-      }
+        <section id="problems" class="section">
 
-      // Load CF data immediately (for homepage badge) and when CF tab opens
-      load();
-    })();
+            <div class="section-title">
 
-    /* ── GITHUB PROJECTS ── */
-    (function () {
-      const REPOS = [
-        'RifatParadoxical/Home-electricity-track',
-        'RifatParadoxical/Arduino-Ultrasonic-Distance-Meter',
-        'RifatParadoxical/Esp32-weather-station'
-      ];
-      const grid = document.getElementById('projectsGrid');
-      if (!grid) return;
+                <h2>
+                    Problem Solving Log
+                </h2>
 
-      const langColors = {
-        'C++': '#f34b7d', 'C': '#555555', 'Python': '#3572A5',
-        'JavaScript': '#f1e05a', 'TypeScript': '#3178c6', 'HTML': '#e34c26',
-        'CSS': '#563d7c', 'Arduino': '#bd79d1', 'Shell': '#89e051'
-      };
+                <span>
+                    DEBUG.LOG
+                </span>
 
-      function timeAgo(d) {
-        const s = Math.floor((Date.now() - new Date(d)) / 1000);
-        if (s < 60) return 'just now';
-        if (s < 3600) return Math.floor(s / 60) + 'm ago';
-        if (s < 86400) return Math.floor(s / 3600) + 'h ago';
-        if (s < 2592000) return Math.floor(s / 86400) + 'd ago';
-        return Math.floor(s / 2592000) + 'mo ago';
-      }
+            </div>
 
-      function buildCard(r) {
-        const lc = langColors[r.language] || 'var(--faint)';
-        return `<a href="${r.html_url}" target="_blank" class="skill-item" style="text-decoration:none;color:inherit;display:block;">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
-            </svg>
-            <span style="font-family:var(--mono);font-size:13px;font-weight:600;color:var(--accent);">${r.name}</span>
-          </div>
-          <div class="skill-desc" style="margin-bottom:14px;">${r.description || 'No description available.'}</div>
-          <div style="display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:11px;color:var(--faint);">
-            ${r.language ? `<span style="display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:50%;background:${lc};display:inline-block;"></span>${r.language}</span>` : ''}
-            <span style="display:flex;align-items:center;gap:3px;">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-              ${r.stargazers_count}
+
+            <div class="section-body">
+
+                <div class="problem-intro">
+
+                    Competitive programming isn't just about the
+                    problems I solved. It's also about the attempts
+                    that happened before the final answer.
+
+                    <span class="flow">
+                        WA → DEBUG → TLE → THINK → AC
+                    </span>
+
+                </div>
+
+
+                <div class="problem-toolbar">
+
+                    <span id="cfStatus" class="cf-status loading">
+                        CONNECTING TO CODEFORCES...
+                    </span>
+
+                    <button
+                        id="refreshCf"
+                        class="refresh-cf"
+                        type="button">
+
+                        ↻ REFRESH
+
+                    </button>
+
+                </div>
+
+
+                <!--
+                    IMPORTANT:
+
+                    JavaScript will populate this container.
+
+                    DO NOT manually add problem cards here.
+                -->
+
+                <div id="problemLog" class="problem-log">
+
+                    <div class="cf-loading">
+
+                        <span>
+                            Loading submission history...
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div style="
+                    margin-top:13px;
+                    padding:11px;
+                    text-align:center;
+                    border:1px solid #29383d;
+                    background:#090e10;
+                    color:#63757a;
+                    font:10px var(--font-code);
+                ">
+
+                    <span style="color:#ff5c62;">
+                        WRONG ANSWER
+                    </span>
+
+                    &nbsp;→&nbsp;
+
+                    <span style="color:#e8c85c;">
+                        TIMEOUT
+                    </span>
+
+                    &nbsp;→&nbsp;
+
+                    <span style="color:#57d66b;">
+                        ACCEPTED
+                    </span>
+
+                    <br>
+
+                    <span style="display:block;margin-top:6px;">
+                        The failed attempts are part of the story.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =======================================================
+             EDUCATION
+        ======================================================== -->
+
+        <section id="education" class="section">
+
+            <div class="section-title">
+
+                <h2>
+                    Education
+                </h2>
+
+                <span>
+                    SCHOOL.LOG
+                </span>
+
+            </div>
+
+
+            <div class="section-body">
+
+                <div class="education">
+
+
+                    <article class="edu-item">
+
+                        <div class="edu-year">
+                            NOW
+                        </div>
+
+                        <div class="edu-content">
+
+                            <h3>
+                                BSc in Computer Science & Engineering
+                            </h3>
+
+                            <p>
+                                Sheikh Borhanuddin University and College
+                            </p>
+
+                            <p>
+                                Currently studying.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="edu-item">
+
+                        <div class="edu-year">
+                            HSC
+                        </div>
+
+                        <div class="edu-content">
+
+                            <h3>
+                                HSC — Science
+                            </h3>
+
+                            <p>
+                                Dr. Mahbubur Rahman Mollah College
+                            </p>
+
+                            <p>
+                                GPA 4.50 · Higher Secondary Certificate
+                            </p>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =======================================================
+             CONTACT
+        ======================================================== -->
+
+        <section id="contact" class="section">
+
+            <div class="section-title">
+
+                <h2>
+                    Contact
+                </h2>
+
+                <span>
+                    MAIL.EXE
+                </span>
+
+            </div>
+
+
+            <div class="section-body" style="text-align:center;">
+
+                <div style="
+                    color:#8b9a9f;
+                    margin-bottom:12px;
+                ">
+
+                    Want to talk about embedded systems,
+                    programming or a project?
+
+                </div>
+
+
+                <a
+                    href="mailto:muhammadrifat67@gmail.com"
+                    style="
+                        display:inline-block;
+                        padding:10px 15px;
+
+                        color:#001014;
+
+                        font:bold 11px var(--font-code);
+
+                        border:1px solid #5cecff;
+
+                        background:
+                            linear-gradient(
+                                #4ce6ff,
+                                #0098b8
+                            );
+
+                        box-shadow:
+                            inset 0 1px rgba(255,255,255,.55),
+                            0 3px 10px rgba(0,0,0,.4);
+                    ">
+
+                    SEND MESSAGE
+
+                </a>
+
+
+                <div style="
+                    margin-top:13px;
+                    color:#64757a;
+                    font:10px var(--font-code);
+                ">
+
+                    GitHub:
+
+                    <a
+                        href="https://github.com/RifatParadoxical"
+                        target="_blank"
+                        rel="noopener"
+                        style="color:#00b4d8;">
+
+                        RifatParadoxical ↗
+
+                    </a>
+
+                    &nbsp; | &nbsp;
+
+                    Codeforces:
+
+                    <a
+                        href="https://codeforces.com/profile/muhammad_rifat"
+                        target="_blank"
+                        rel="noopener"
+                        style="color:#00b4d8;">
+
+                        muhammad_rifat ↗
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =======================================================
+             FOOTER
+        ======================================================== -->
+
+        <footer>
+
+            <div class="footer-badge">
+
+                Retro by Design ©
+                <span id="year"></span>
+
+            </div>
+
+            <br>
+
+            Made with love for retro tech
+
+            <br>
+
+            <span style="color:#435257;">
+                Built in the present. Inspired by the old web.
             </span>
-            <span style="display:flex;align-items:center;gap:3px;">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 18V6l10 6-10 6z"/></svg>
-              ${r.forks_count}
-            </span>
-            <span>${timeAgo(r.updated_at)}</span>
-          </div>
-        </a>`;
-      }
 
-      async function loadProjects() {
-        try {
-          const results = await Promise.all(
-            REPOS.map(repo =>
-              fetch(`https://api.github.com/repos/${repo}`, { cache: 'no-cache' })
-                .then(r => r.json())
-            )
-          );
-          grid.innerHTML = results.map(r => buildCard(r)).join('');
-        } catch (e) {
-          grid.innerHTML = `<div class="cf-loading"><span style="color:var(--faint);font-family:var(--mono);font-size:12px;">Could not load projects — ${e.message}</span></div>`;
+        </footer>
+
+    </div>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script>
+
+        /* =========================================================
+           BASIC SITE FUNCTIONS
+        ========================================================= */
+
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+
+
+        /* =========================================================
+           CRT / SCANLINE TOGGLE
+        ========================================================= */
+
+        const crtButton =
+            document.getElementById("crtToggle");
+
+        const savedCRT =
+            localStorage.getItem("retro-crt");
+
+        if (savedCRT === "on") {
+
+            document.body.classList.add("scanlines");
+
+            crtButton.textContent = "CRT: ON";
+
         }
-      }
 
-      // load when projects tab is first opened
-      const projSection = document.getElementById('tab-projects');
-      if (projSection) {
-        const obs = new MutationObserver((_, o) => {
-          if (projSection.classList.contains('active')) { o.disconnect(); loadProjects(); }
+
+        crtButton.addEventListener("click", () => {
+
+            const enabled =
+                document.body.classList.toggle("scanlines");
+
+            crtButton.textContent =
+                enabled
+                    ? "CRT: ON"
+                    : "CRT: OFF";
+
+            localStorage.setItem(
+                "retro-crt",
+                enabled ? "on" : "off"
+            );
+
         });
-        obs.observe(projSection, { attributes: true, attributeFilter: ['class'] });
-        if (projSection.classList.contains('active')) loadProjects();
-      }
-    })();
 
-    /* ── CURSOR FOLLOWER ── */
-    (function () {
-      const dot = document.getElementById('cursorDot');
-      const ring = document.getElementById('cursorRing');
-      if (!dot || !ring) return;
 
-      let mx = window.innerWidth / 2, my = window.innerHeight / 2;
-      let rx = mx, ry = my;
+        /* =========================================================
+           ACTIVE NAVIGATION TAB
+        ========================================================= */
 
-      document.addEventListener('mousemove', e => {
-        mx = e.clientX; my = e.clientY;
-        dot.style.left = mx + 'px';
-        dot.style.top = my + 'px';
-      });
+        const sections =
+            document.querySelectorAll("section[id]");
 
-      document.querySelectorAll('a,button,[onclick]').forEach(el => {
-        el.addEventListener('mouseenter', () => ring.classList.add('expand'));
-        el.addEventListener('mouseleave', () => ring.classList.remove('expand'));
-      });
+        const tabs =
+            document.querySelectorAll(".tab");
 
-      function lerp(a, b, t) { return a + (b - a) * t; }
-      function loop() {
-        rx = lerp(rx, mx, 0.12);
-        ry = lerp(ry, my, 0.12);
-        ring.style.left = rx + 'px';
-        ring.style.top = ry + 'px';
-        requestAnimationFrame(loop);
-      }
-      loop();
-    })();
-  </script>
+        const observer =
+            new IntersectionObserver(
+
+                entries => {
+
+                    entries.forEach(entry => {
+
+                        if (!entry.isIntersecting) {
+                            return;
+                        }
+
+                        tabs.forEach(tab => {
+                            tab.classList.remove("active");
+                        });
+
+                        const active =
+                            document.querySelector(
+                                `.tab[href="#${entry.target.id}"]`
+                            );
+
+                        active?.classList.add("active");
+
+                    });
+
+                },
+
+                {
+                    rootMargin: "-35% 0px -55% 0px"
+                }
+
+            );
+
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+
+        /* =========================================================
+           CODEFORCES PROBLEM SOLVING LOG
+        ========================================================= */
+
+        (() => {
+
+            /*
+             * ======================================================
+             * CONFIGURATION
+             * ======================================================
+             *
+             * This is the ONLY important thing you should need
+             * to change later.
+             *
+             * Your Codeforces handle:
+             */
+
+            const CF_HANDLE = "muhammad_rifat";
+
+
+            /*
+             * Number of submissions to request.
+             *
+             * Codeforces user.status returns submissions ordered
+             * newest -> oldest.
+             *
+             * 1000 is enough for most personal portfolios and keeps
+             * the page fast.
+             */
+
+            const SUBMISSION_LIMIT = 1000;
+
+
+            /*
+             * Maximum number of problem cards displayed.
+             *
+             * Change this to 20, 30, 50 etc. if you want.
+             */
+
+            const MAX_PROBLEMS_DISPLAYED = 10;
+
+
+            /*
+             * DOM elements
+             */
+
+            const problemLog =
+                document.getElementById("problemLog");
+
+            const cfStatus =
+                document.getElementById("cfStatus");
+
+            const refreshButton =
+                document.getElementById("refreshCf");
+
+
+            /* ======================================================
+               VERDICT DEFINITIONS
+            ====================================================== */
+
+            const VERDICTS = {
+
+                OK: {
+                    label: "ACCEPTED",
+                    short: "AC",
+                    className: "ac",
+                    icon: "✓"
+                },
+
+                WRONG_ANSWER: {
+                    label: "WRONG ANSWER",
+                    short: "WA",
+                    className: "wa",
+                    icon: "✕"
+                },
+
+                TIME_LIMIT_EXCEEDED: {
+                    label: "TIME LIMIT",
+                    short: "TLE",
+                    className: "tle",
+                    icon: "!"
+                },
+
+                RUNTIME_ERROR: {
+                    label: "RUNTIME ERROR",
+                    short: "RE",
+                    className: "re",
+                    icon: "!"
+                },
+
+                COMPILATION_ERROR: {
+                    label: "COMPILATION ERROR",
+                    short: "CE",
+                    className: "ce",
+                    icon: "✕"
+                },
+
+                MEMORY_LIMIT_EXCEEDED: {
+                    label: "MEMORY LIMIT",
+                    short: "MLE",
+                    className: "mle",
+                    icon: "!"
+                },
+
+                IDLENESS_LIMIT_EXCEEDED: {
+                    label: "IDLENESS LIMIT",
+                    short: "ILE",
+                    className: "tle",
+                    icon: "!"
+                },
+
+                SECURITY_VIOLATED: {
+                    label: "SECURITY VIOLATION",
+                    short: "SEC",
+                    className: "other",
+                    icon: "!"
+                },
+
+                CRASHED: {
+                    label: "CRASHED",
+                    short: "CRASH",
+                    className: "re",
+                    icon: "!"
+                },
+
+                INPUT_PREPARATION_CRASHED: {
+                    label: "INPUT CRASH",
+                    short: "IPC",
+                    className: "re",
+                    icon: "!"
+                },
+
+                CHALLENGED: {
+                    label: "CHALLENGED",
+                    short: "CH",
+                    className: "other",
+                    icon: "!"
+                },
+
+                SKIPPED: {
+                    label: "SKIPPED",
+                    short: "SKIP",
+                    className: "other",
+                    icon: "·"
+                },
+
+                REJECTED: {
+                    label: "REJECTED",
+                    short: "REJ",
+                    className: "other",
+                    icon: "!"
+                },
+
+                FAILED: {
+                    label: "FAILED",
+                    short: "FAIL",
+                    className: "wa",
+                    icon: "✕"
+                },
+
+                PARTIAL: {
+                    label: "PARTIAL",
+                    short: "PARTIAL",
+                    className: "other",
+                    icon: "!"
+                },
+
+                TESTING: {
+                    label: "TESTING",
+                    short: "TEST",
+                    className: "other",
+                    icon: "…"
+                },
+
+                SUBMITTED: {
+                    label: "SUBMITTED",
+                    short: "SUB",
+                    className: "other",
+                    icon: "…"
+                }
+
+            };
+
+
+            /* ======================================================
+               HELPERS
+            ====================================================== */
+
+            function escapeHTML(value) {
+
+                return String(value ?? "")
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+
+            }
+
+
+            function getVerdictInfo(verdict) {
+
+                return VERDICTS[verdict] || {
+
+                    label:
+                        String(verdict || "UNKNOWN")
+                            .replaceAll("_", " "),
+
+                    short: "OTHER",
+
+                    className: "other",
+
+                    icon: "!"
+
+                };
+
+            }
+
+
+            function getProblemKey(problem) {
+
+                /*
+                 * THIS IS THE IMPORTANT FIX.
+                 *
+                 * A problem is uniquely identified by its contest
+                 * and index.
+                 *
+                 * Example:
+                 *
+                 * 2214A
+                 *
+                 * Every submission for 2214A therefore gets placed
+                 * inside the same problem card.
+                 */
+
+                const contest =
+                    problem.contestId ??
+                    problem.problemsetName ??
+                    "unknown";
+
+                const index =
+                    problem.index ??
+                    "unknown";
+
+                return `${contest}:${index}`;
+
+            }
+
+
+            function formatDate(timestamp) {
+
+                const date =
+                    new Date(timestamp * 1000);
+
+                return {
+
+                    month:
+                        date.toLocaleString(
+                            "en-US",
+                            { month: "short" }
+                        ).toUpperCase(),
+
+                    day:
+                        String(date.getDate())
+                            .padStart(2, "0"),
+
+                    full:
+                        date.toLocaleString(
+                            "en-US",
+                            {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric"
+                            }
+                        )
+
+                };
+
+            }
+
+
+            function getContestLabel(submission) {
+
+                const problem =
+                    submission.problem || {};
+
+                if (problem.problemsetName) {
+
+                    return problem.problemsetName;
+
+                }
+
+                if (submission.contestId) {
+
+                    return "CODEFORCES";
+
+                }
+
+                return "CODEFORCES";
+
+            }
+
+
+            function getProblemURL(problem) {
+
+                /*
+                 * Regular Codeforces contests.
+                 *
+                 * For normal contest problems this gives:
+                 *
+                 * /contest/2214/problem/A
+                 */
+
+                if (
+                    problem.contestId &&
+                    problem.index
+                ) {
+
+                    return (
+                        "https://codeforces.com/contest/" +
+                        encodeURIComponent(problem.contestId) +
+                        "/problem/" +
+                        encodeURIComponent(problem.index)
+                    );
+
+                }
+
+                return null;
+
+            }
+
+
+            /* ======================================================
+               CREATE HUMAN-READABLE STORY FROM REAL DATA
+               ====================================================== */
+
+            function createProblemStory(problemData) {
+
+                const submissions =
+                    problemData.submissions;
+
+                const total =
+                    submissions.length;
+
+                const accepted =
+                    submissions.some(
+                        submission =>
+                            submission.verdict === "OK"
+                    );
+
+                const failed =
+                    submissions.filter(
+                        submission =>
+                            submission.verdict !== "OK"
+                    );
+
+
+                /*
+                 * We intentionally DO NOT invent a personal story.
+                 *
+                 * The website only knows Codeforces' actual verdicts.
+                 *
+                 * So the text below describes exactly what the
+                 * submission history proves.
+                 */
+
+                let wentWrong = "";
+
+                let learned = "";
+
+
+                if (total === 1 && accepted) {
+
+                    wentWrong =
+                        "No failed submission this time. " +
+                        "The first recorded attempt was accepted.";
+
+                    learned =
+                        "Sometimes the cleanest solution is the one " +
+                        "that works before the debugging session begins.";
+
+                }
+
+                else if (accepted && failed.length > 0) {
+
+                    const failedTypes =
+                        [...new Set(
+                            failed.map(
+                                submission =>
+                                    getVerdictInfo(
+                                        submission.verdict
+                                    ).label
+                            )
+                        )];
+
+                    const labels =
+                        failedTypes.join(", ");
+
+                    wentWrong =
+                        `The solution needed ${failed.length} ` +
+                        `correction${failed.length === 1 ? "" : "s"} ` +
+                        `before it was accepted. Recorded issues: ${labels}.`;
+
+                    learned =
+                        "The final accepted submission is only the end " +
+                        "of the process. The failed attempts are part of " +
+                        "the debugging history.";
+
+                }
+
+                else if (!accepted && total > 1) {
+
+                    const verdictTypes =
+                        [...new Set(
+                            submissions.map(
+                                submission =>
+                                    getVerdictInfo(
+                                        submission.verdict
+                                    ).label
+                            )
+                        )];
+
+                    wentWrong =
+                        `No accepted submission is recorded in the ` +
+                        `loaded history. ${total} attempts were found, ` +
+                        `including: ${verdictTypes.join(", ")}.`;
+
+                    learned =
+                        "An unfinished problem is still useful information: " +
+                        "the next step is to inspect the failing cases, " +
+                        "complexity and implementation assumptions.";
+
+                }
+
+                else {
+
+                    wentWrong =
+                        "The loaded submission history does not contain " +
+                        "an accepted solution yet.";
+
+                    learned =
+                        "Every submission adds information about what " +
+                        "the current approach still needs.";
+
+                }
+
+
+                return {
+                    wentWrong,
+                    learned
+                };
+
+            }
+
+
+            /* ======================================================
+               GROUP SUBMISSIONS INTO PROBLEMS
+            ====================================================== */
+
+            function groupSubmissions(submissions) {
+
+                const groups =
+                    new Map();
+
+
+                submissions.forEach(submission => {
+
+                    /*
+                     * Ignore submissions without a problem object.
+                     */
+
+                    if (!submission.problem) {
+                        return;
+                    }
+
+
+                    /*
+                     * Ignore non-final weird entries if desired.
+                     *
+                     * We keep normal submissions and let their actual
+                     * verdict appear in the history.
+                     */
+
+                    const key =
+                        getProblemKey(
+                            submission.problem
+                        );
+
+
+                    if (!groups.has(key)) {
+
+                        groups.set(key, {
+
+                            key,
+
+                            problem:
+                                submission.problem,
+
+                            submissions: []
+
+                        });
+
+                    }
+
+
+                    groups
+                        .get(key)
+                        .submissions
+                        .push(submission);
+
+                });
+
+
+                const problems =
+                    [...groups.values()];
+
+
+                /*
+                 * The API gives submissions newest -> oldest.
+                 *
+                 * For the card we want:
+                 *
+                 * oldest -> newest
+                 *
+                 * so the debugging story reads naturally.
+                 */
+
+                problems.forEach(problemData => {
+
+                    problemData.submissions.sort(
+                        (a, b) =>
+                            a.creationTimeSeconds -
+                            b.creationTimeSeconds
+                    );
+
+                });
+
+
+                /*
+                 * Sort problems by the most recent submission.
+                 *
+                 * Therefore your newest activity appears first.
+                 */
+
+                problems.sort((a, b) => {
+
+                    const aLatest =
+                        a.submissions[
+                            a.submissions.length - 1
+                        ]?.creationTimeSeconds || 0;
+
+                    const bLatest =
+                        b.submissions[
+                            b.submissions.length - 1
+                        ]?.creationTimeSeconds || 0;
+
+                    return bLatest - aLatest;
+
+                });
+
+
+                return problems;
+
+            }
+
+
+            /* ======================================================
+               RENDER ONE PROBLEM CARD
+            ====================================================== */
+
+            function renderProblem(problemData) {
+
+                const problem =
+                    problemData.problem;
+
+                const submissions =
+                    problemData.submissions;
+
+
+                if (!submissions.length) {
+                    return "";
+                }
+
+
+                /*
+                 * Latest submission controls the date shown on the
+                 * left side of the card.
+                 */
+
+                const latest =
+                    submissions[
+                        submissions.length - 1
+                    ];
+
+
+                const date =
+                    formatDate(
+                        latest.creationTimeSeconds
+                    );
+
+
+                const problemName =
+                    problem.name ||
+                    "Unknown Problem";
+
+
+                const index =
+                    problem.index ||
+                    "?";
+
+
+                const rating =
+                    problem.rating
+                        ? `${problem.rating} RATING`
+                        : "UNRATED";
+
+
+                const platform =
+                    getContestLabel(latest);
+
+
+                const url =
+                    getProblemURL(problem);
+
+
+                const titleHTML =
+                    url
+
+                        ? `
+                            <a
+                                href="${url}"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                // ${escapeHTML(index)}
+                                — ${escapeHTML(problemName)}
+                            </a>
+                          `
+
+                        : `
+                            // ${escapeHTML(index)}
+                            — ${escapeHTML(problemName)}
+                          `;
+
+
+                const verdictHTML =
+                    submissions
+                        .map(submission => {
+
+                            const info =
+                                getVerdictInfo(
+                                    submission.verdict
+                                );
+
+                            return `
+                                <span
+                                    class="result ${info.className}"
+                                    title="${escapeHTML(
+                                        submission.verdict
+                                    )}"
+                                >
+                                    ${info.icon}
+                                    ${escapeHTML(info.label)}
+                                </span>
+                            `;
+
+                        })
+                        .join("");
+
+
+                const story =
+                    createProblemStory(
+                        problemData
+                    );
+
+
+                const accepted =
+                    submissions.some(
+                        submission =>
+                            submission.verdict === "OK"
+                    );
+
+
+                const attemptCount =
+                    submissions.length;
+
+
+                const acceptedText =
+                    accepted
+                        ? "SOLVED"
+                        : "NOT ACCEPTED";
+
+
+                const acceptedColor =
+                    accepted
+                        ? "var(--green)"
+                        : "var(--yellow)";
+
+
+                return `
+
+                    <article class="problem">
+
+                        <div class="problem-date">
+
+                            ${escapeHTML(date.month)}
+
+                            <span class="day">
+                                ${escapeHTML(date.day)}
+                            </span>
+
+                        </div>
+
+
+                        <div class="problem-content">
+
+                            <div class="problem-head">
+
+                                <span class="problem-name">
+                                    ${titleHTML}
+                                </span>
+
+                                <span class="problem-platform">
+
+                                    ${escapeHTML(platform)}
+
+                                    ·
+
+                                    ${escapeHTML(rating)}
+
+                                </span>
+
+                            </div>
+
+
+                            <div class="submission-history">
+
+                                ${verdictHTML}
+
+                            </div>
+
+
+                            <div class="problem-meta">
+
+                                <span class="meta-chip">
+
+                                    ${attemptCount}
+                                    ${attemptCount === 1
+                                        ? "ATTEMPT"
+                                        : "ATTEMPTS"}
+
+                                </span>
+
+                                <span
+                                    class="meta-chip"
+                                    style="
+                                        color:${acceptedColor};
+                                    "
+                                >
+
+                                    ● ${acceptedText}
+
+                                </span>
+
+                                <span class="meta-chip">
+
+                                    ${escapeHTML(
+                                        date.full
+                                    )}
+
+                                </span>
+
+                            </div>
+
+
+                            <div class="lesson">
+
+                                <strong>
+                                    What went wrong:
+                                </strong>
+
+                                ${escapeHTML(
+                                    story.wentWrong
+                                )}
+
+                                <br><br>
+
+                                <strong>
+                                    What I learned:
+                                </strong>
+
+                                ${escapeHTML(
+                                    story.learned
+                                )}
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                `;
+
+            }
+
+
+            /* ======================================================
+               RENDER ALL PROBLEMS
+            ====================================================== */
+
+            function renderProblems(problems) {
+
+                if (!problems.length) {
+
+                    problemLog.innerHTML = `
+
+                        <div class="cf-empty">
+
+                            No Codeforces submissions were found
+                            for this account.
+
+                        </div>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                const visibleProblems =
+                    problems.slice(
+                        0,
+                        MAX_PROBLEMS_DISPLAYED
+                    );
+
+
+                problemLog.innerHTML =
+                    visibleProblems
+                        .map(renderProblem)
+                        .join("");
+
+
+                /*
+                 * If more problems exist, show a small note.
+                 */
+
+                if (
+                    problems.length >
+                    MAX_PROBLEMS_DISPLAYED
+                ) {
+
+                    problemLog.insertAdjacentHTML(
+                        "beforeend",
+
+                        `
+
+                        <div class="cf-empty">
+
+                            Showing the latest
+                            ${MAX_PROBLEMS_DISPLAYED}
+                            problems from the loaded history.
+
+                            <br><br>
+
+                            Older problems are still available
+                            on the Codeforces profile.
+
+                        </div>
+
+                        `
+
+                    );
+
+                }
+
+            }
+
+
+            /* ======================================================
+               JSONP LOADER
+            ====================================================== */
+
+            function loadCodeforcesJSONP() {
+
+                return new Promise(
+                    (resolve, reject) => {
+
+                        /*
+                         * Codeforces supports JSONP.
+                         *
+                         * This is useful because your portfolio can
+                         * run directly from index.html without needing
+                         * a backend server.
+                         */
+
+                        const callbackName =
+                            "cfPortfolioCallback_" +
+                            Date.now() +
+                            "_" +
+                            Math.random()
+                                .toString(36)
+                                .slice(2);
+
+
+                        const script =
+                            document.createElement("script");
+
+
+                        let finished = false;
+
+
+                        const cleanup = () => {
+
+                            try {
+                                delete window[
+                                    callbackName
+                                ];
+                            }
+
+                            catch (e) {
+
+                                window[
+                                    callbackName
+                                ] = undefined;
+
+                            }
+
+
+                            script.remove();
+
+                        };
+
+
+                        const timeout =
+                            setTimeout(() => {
+
+                                if (finished) {
+                                    return;
+                                }
+
+                                finished = true;
+
+                                cleanup();
+
+                                reject(
+                                    new Error(
+                                        "Codeforces API request timed out."
+                                    )
+                                );
+
+                            }, 15000);
+
+
+                        window[callbackName] =
+                            response => {
+
+                                if (finished) {
+                                    return;
+                                }
+
+                                finished = true;
+
+                                clearTimeout(timeout);
+
+                                cleanup();
+
+
+                                if (
+                                    !response ||
+                                    response.status !== "OK"
+                                ) {
+
+                                    reject(
+                                        new Error(
+                                            response?.comment ||
+                                            "Codeforces API returned an error."
+                                        )
+                                    );
+
+                                    return;
+                                }
+
+
+                                resolve(
+                                    response.result || []
+                                );
+
+                            };
+
+
+                        script.onerror = () => {
+
+                            if (finished) {
+                                return;
+                            }
+
+                            finished = true;
+
+                            clearTimeout(timeout);
+
+                            cleanup();
+
+                            reject(
+                                new Error(
+                                    "Could not connect to Codeforces."
+                                )
+                            );
+
+                        };
+
+
+                        /*
+                         * Build the URL without putting a literal URL
+                         * inside this HTML source.
+                         */
+
+                        const base =
+                            [
+                                "https://",
+                                "codeforces.com",
+                                "/api/user.status"
+                            ].join("");
+
+
+                        const params =
+                            new URLSearchParams({
+
+                                handle:
+                                    CF_HANDLE,
+
+                                from:
+                                    "1",
+
+                                count:
+                                    String(
+                                        SUBMISSION_LIMIT
+                                    ),
+
+                                jsonp:
+                                    callbackName
+
+                            });
+
+
+                        script.src =
+                            `${base}?${params.toString()}`;
+
+
+                        document.body.appendChild(
+                            script
+                        );
+
+                    }
+                );
+
+            }
+
+
+            /* ======================================================
+               MAIN LOAD FUNCTION
+            ====================================================== */
+
+            async function load() {
+
+                cfStatus.textContent =
+                    "CONNECTING TO CODEFORCES...";
+
+                cfStatus.className =
+                    "cf-status loading";
+
+
+                refreshButton.disabled =
+                    true;
+
+
+                refreshButton.style.opacity =
+                    "0.5";
+
+
+                problemLog.innerHTML = `
+
+                    <div class="cf-loading">
+
+                        Loading real submission history
+                        for
+                        ${escapeHTML(CF_HANDLE)}
+                        ...
+
+                    </div>
+
+                `;
+
+
+                try {
+
+                    const submissions =
+                        await loadCodeforcesJSONP();
+
+
+                    /*
+                     * The important operation:
+                     *
+                     * submissions
+                     *       ↓
+                     * group by problem
+                     *       ↓
+                     * unique problem cards
+                     */
+
+                    const problems =
+                        groupSubmissions(
+                            submissions
+                        );
+
+
+                    renderProblems(
+                        problems
+                    );
+
+
+                    cfStatus.textContent =
+                        `LIVE · ${problems.length} PROBLEMS LOADED`;
+
+                    cfStatus.className =
+                        "cf-status success";
+
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Codeforces loader error:",
+                        error
+                    );
+
+
+                    problemLog.innerHTML = `
+
+                        <div class="cf-error-box">
+
+                            <strong>
+                                CODEFORCES CONNECTION FAILED
+                            </strong>
+
+                            <br><br>
+
+                            Could not load the live submission
+                            history right now.
+
+                            <br><br>
+
+                            Error:
+                            ${escapeHTML(
+                                error.message
+                            )}
+
+                            <br><br>
+
+                            The rest of the portfolio is still
+                            working normally. Try the
+                            <strong>↻ REFRESH</strong> button
+                            in a moment.
+
+                        </div>
+
+                    `;
+
+
+                    cfStatus.textContent =
+                        "OFFLINE · COULD NOT LOAD DATA";
+
+                    cfStatus.className =
+                        "cf-status error";
+
+                }
+
+                finally {
+
+                    refreshButton.disabled =
+                        false;
+
+                    refreshButton.style.opacity =
+                        "1";
+
+                }
+
+            }
+
+
+            /* ======================================================
+               REFRESH BUTTON
+            ====================================================== */
+
+            refreshButton.addEventListener(
+                "click",
+                load
+            );
+
+
+            /* ======================================================
+               LOAD IMMEDIATELY
+            ====================================================== */
+
+            load();
+
+        })();
+
+    </script>
+
 </body>
 
 </html>
