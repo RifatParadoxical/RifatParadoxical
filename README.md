@@ -19,7 +19,7 @@
 ```c
 #include <stdio.h>
 
-vpid main() {
+void main() {
     char* name        = "Rifat";
     char* location    = "Bangladesh";
     char* status      = "Passionate ofc!";
